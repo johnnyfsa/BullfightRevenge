@@ -24,7 +24,9 @@ public class EnemyShoot : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1);
-            Instantiate(projectilePrefab, transform.TransformPoint(offset), transform.rotation);
+            projectilePrefab = (GameObject)ObjectPool.Instance.GetPooledObject();
+            projectilePrefab.transform.position = transform.TransformPoint(offset);
+            projectilePrefab.transform.rotation = transform.rotation;
         }
 
     }

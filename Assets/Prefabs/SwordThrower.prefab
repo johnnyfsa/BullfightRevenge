@@ -52,6 +52,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordThrower
       objectReference: {fileID: 0}
+    - target: {fileID: 6530168938651264524, guid: 74e00bd812fd46e4d83ba778a0ab4d1c, type: 3}
+      propertyPath: m_Size.y
+      value: 3.1759799
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530168938651264524, guid: 74e00bd812fd46e4d83ba778a0ab4d1c, type: 3}
+      propertyPath: m_Center.y
+      value: 1.619764
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530168938651264524, guid: 74e00bd812fd46e4d83ba778a0ab4d1c, type: 3}
+      propertyPath: m_Center.z
+      value: 5.850736e-17
+      objectReference: {fileID: 0}
     - target: {fileID: 6750285784618141820, guid: 74e00bd812fd46e4d83ba778a0ab4d1c, type: 3}
       propertyPath: m_IsActive
       value: 0
