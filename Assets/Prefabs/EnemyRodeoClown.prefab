@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5309163424158820885, guid: 74e00bd812fd46e4d83ba778a0ab4d1c, type: 3}
       propertyPath: m_Name
-      value: RodeoClown
+      value: EnemyRodeoClown
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

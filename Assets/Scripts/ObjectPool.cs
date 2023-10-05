@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    private static ObjectPool instance;
     [SerializeField] GameObject prefab;
     [SerializeField][Range(0, 50)] int poolSize = 15;
     [SerializeField] bool canExpand = true;
     private List<GameObject> pooledObjects;
-
-    public static ObjectPool Instance { get ; private set; }
-
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +37,19 @@ public class ObjectPool : MonoBehaviour
         }
 
         return CreateNewObject();
+    }
+
+    public void SetObjectToPool(GameObject obj)
+    {
+        foreach (GameObject pooledObject in pooledObjects)
+        {
+            if (!pooledObject.activeInHierarchy)
+            {
+                pooledObjects.Add(obj);
+                pooledObjects.Remove(pooledObject);
+                return;
+            }
+        }
     }
 
     private GameObject CreateNewObject()

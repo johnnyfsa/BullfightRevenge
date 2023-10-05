@@ -15,7 +15,7 @@ public class RemoveWhenOutOfBounds : MonoBehaviour
     {
         if (transform.position.magnitude > maxDistance)
         {
-            ObjectPool.Instance.ReturnObjectToPool(gameObject);
+            SpawnManager.Instance.ProjectilePool.ReturnObjectToPool(gameObject);
             return;
         }
 
