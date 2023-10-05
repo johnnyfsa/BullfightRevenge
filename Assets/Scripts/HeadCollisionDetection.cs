@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class HeadCollisionDetection : MonoBehaviour
 {
-
+    private float headbuttDistance = 1.0f;
 
     // Update is called once per frame
     void Update()
     {
-        bool hit = Physics.Raycast(transform.position, transform.forward, 1.0f);
-        if (hit)
+        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, headbuttDistance))
         {
-            Debug.Log("Hit");
+            if(hit.transform.TryGetComponent(out Enemy enemy))
+            {
+                enemy.Explode();
+            }
+            
         }
     }
 }

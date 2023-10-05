@@ -33,12 +33,12 @@ public class EnemeySpawner : MonoBehaviour
                 break;
             case 2:
                 spawnPosition = new Vector3(Random.Range(-10, 10), 0, -10);
-                spawnRotation = 90.0f;
+                spawnRotation = 0.0f;
                 SetEnemyType(Random.Range(0, 1));
                 break;
             case 3:
-                spawnPosition = new Vector3(Random.Range(-10, 10), 0, -10);
-                spawnRotation = 0.0f;
+                spawnPosition = new Vector3(-10, 0, Random.Range(-10, 10));
+                spawnRotation = 90.0f;
                 SetEnemyType(Random.Range(0, 1));
                 break;
         }
