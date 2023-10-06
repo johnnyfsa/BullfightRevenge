@@ -34,12 +34,12 @@ public class EnemeySpawner : MonoBehaviour
             case 2:
                 spawnPosition = new Vector3(Random.Range(-10, 10), 0, -10);
                 spawnRotation = 0.0f;
-                SetEnemyType(Random.Range(0, 1));
+                SetEnemyType(Random.Range(0, 2));
                 break;
             case 3:
                 spawnPosition = new Vector3(-10, 0, Random.Range(-10, 10));
                 spawnRotation = 90.0f;
-                SetEnemyType(Random.Range(0, 1));
+                SetEnemyType(Random.Range(0, 2));
                 break;
         }
     }
@@ -55,7 +55,9 @@ public class EnemeySpawner : MonoBehaviour
                 SpawnManager.Instance.EnemyPool.SetObjectToPool(enemy);
                 break;
             case 1:
-                Instantiate(enemyRodeoClownPrefab, spawnPosition, Quaternion.identity);
+                GameObject enemy2 = Instantiate(enemyRodeoClownPrefab);
+                enemy2.transform.position = spawnPosition;
+                SpawnManager.Instance.EnemyPool.SetObjectToPool(enemy2);
                 break;
         }
 
