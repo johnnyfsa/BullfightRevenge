@@ -113,5 +113,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15cd2ced9e6557044a3ef4772d00445a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 4575942837418729211, guid: 263b051c6be9e8348916653e83dcbde0, type: 3}
+  projectilePrefab: {fileID: 3311844856952894315, guid: 263b051c6be9e8348916653e83dcbde0, type: 3}
   shotCooldown: 1.5

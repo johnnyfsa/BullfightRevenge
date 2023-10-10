@@ -19,7 +19,7 @@ public class RodeoClownMovement : MonoBehaviour
         //calculate distance to player
         distanceToPlayer = Vector3.Distance(transform.position, player.position);
         //if shorter than distanceToPlayer run away from player
-        if (distanceToPlayer < 5f)
+        if (distanceToPlayer < distanceThreshold)
         {
             RunAwayFromPlayer();
         }

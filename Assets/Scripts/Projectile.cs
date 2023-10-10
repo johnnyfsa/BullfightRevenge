@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
-public class RemoveWhenOutOfBounds : MonoBehaviour
+
+public class Projectile : MonoBehaviour
 {
     [SerializeField] private float maxDistance = 17.0f;
+    private ObjectPool<Projectile> _pool;
 
+    public void Init(ObjectPool<Projectile> poll)
+    {  
+       _pool = poll;
+       gameObject.SetActive(true); 
+    }
     private void Update()
     {
         CheckBoundaries();
@@ -15,7 +23,7 @@ public class RemoveWhenOutOfBounds : MonoBehaviour
     {
         if (transform.position.magnitude > maxDistance)
         {
-            SpawnManager.Instance.ProjectilePool.ReturnObjectToPool(gameObject);
+            _pool.Release(this);
             return;
         }
 
