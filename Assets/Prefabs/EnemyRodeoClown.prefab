@@ -86,8 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ae43cd0fc367d4ca6a06b6f995f7bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8206340180326505486, guid: 03895ffd1aab776489da328852ae2de8, type: 3}
-  speed: 2
+  speed: 4
   rotationSpeed: 5
   distanceThreshold: 5
 --- !u!1001 &8654114451499058499

@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/UGUI/menuStyle.uss?fileID=7433441132597879392&amp;guid=f4ee9e7a1b22d5641a9f0e0b25365371&amp;type=3#menuStyle" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="Container" style="flex-grow: 1; justify-content: flex-start; flex-basis: 20%; flex-direction: column; width: 100%; height: 67px; align-items: center; bottom: auto; position: absolute; left: 0; margin-top: 0; top: 5px;">
+            <ui:Label tabindex="-1" text="Num Lives:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumLives" class="label" style="left: -500px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

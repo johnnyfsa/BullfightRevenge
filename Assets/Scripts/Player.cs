@@ -1,14 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public event EventHandler OnLivesChanged;
     [SerializeField] InputManager inputManager;
     [SerializeField] float speed = 5f;
     [SerializeField] float rotationSpeed = 5f;
+    [SerializeField] int numLives;
+
     public bool isMoving = false;
     private bool canMove;
+
+    public int NumLives { get => numLives; set => numLives = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,4 +79,14 @@ public class Player : MonoBehaviour
     {
         return isMoving;
     }
+
+    public void AddLives(int livesToAdd)
+    {
+        NumLives += livesToAdd;
+        if (NumLives >= 0)
+        {
+            OnLivesChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
 }

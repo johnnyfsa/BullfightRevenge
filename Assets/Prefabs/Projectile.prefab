@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxDistance: 17
+  damage: 1
 --- !u!1 &6835714731524012722
 GameObject:
   m_ObjectHideFlags: 0
