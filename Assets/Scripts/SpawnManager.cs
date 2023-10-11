@@ -7,21 +7,42 @@ using UnityEngine.Pool;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] List<Enemy> enemies;
+    [SerializeField] List<PowerUp> powerUps;
     private ObjectPool<Enemy> _enemyPool;
+    private ObjectPool<PowerUp> _powerUpPool;
 
-    [SerializeField] float spawnTimer = 1.0f;
+    [SerializeField] float enemySpawnTimer = 1.0f;
+    [SerializeField] float powerUpSpawnTimer = 2.0f;
 
     void Awake()
     {
-        _enemyPool = new ObjectPool<Enemy>(SpawnEnemy, null, OnReturnToPool, defaultCapacity: 20);
+        _enemyPool = new ObjectPool<Enemy>(SpawnEnemy, null, OnReturnEnemyToPool, defaultCapacity: 20);
+        _powerUpPool = new ObjectPool<PowerUp>(SpawnPowerUp, null, OnReturnPowerUpToPool, defaultCapacity: 5);
+
+    }
+
+    private void OnReturnPowerUpToPool(PowerUp powerUp)
+    {
+        powerUp.gameObject.SetActive(false);
+    }
+
+    private PowerUp SpawnPowerUp()
+    {
+        int powerUpToSpawn = UnityEngine.Random.Range(0, powerUps.Count);
+        Vector3 powerUpPosition = new Vector3(UnityEngine.Random.Range(-9f, 10f), 0.3f, UnityEngine.Random.Range(-9f, 10f));
+        PowerUp powerUp = Instantiate(powerUps[powerUpToSpawn]);
+        powerUp.transform.position = powerUpPosition;
+        powerUp.Init(_powerUpPool);
+        return powerUp;
     }
 
     private void Start()
     {
-        StartCoroutine(StartSpawning());
+        StartCoroutine(StartEnemySpawn());
+        StartCoroutine(StartPowerUpSpawn());
     }
 
-    private void OnReturnToPool(Enemy enemy)
+    private void OnReturnEnemyToPool(Enemy enemy)
     {
         enemy.gameObject.SetActive(false);
     }
@@ -85,14 +106,22 @@ public class SpawnManager : MonoBehaviour
         return enemy;
     }
 
-    IEnumerator StartSpawning()
+    IEnumerator StartEnemySpawn()
     {
         while (true)
         {
             SpawnEnemy();
-            yield return new WaitForSeconds(spawnTimer);
+            yield return new WaitForSeconds(enemySpawnTimer);
         }
 
     }
+    IEnumerator StartPowerUpSpawn()
+    {
+        while (true)
+        {
+            SpawnPowerUp();
+            yield return new WaitForSeconds(powerUpSpawnTimer);
+        }
 
+    }
 }

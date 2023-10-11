@@ -11,10 +11,18 @@ public class Player : MonoBehaviour
     [SerializeField] float rotationSpeed = 5f;
     [SerializeField] int numLives;
 
+    [SerializeField] float speedMultiplyer = 1f;
+    [SerializeField] float powerUpDuration = 5f;
+
+    private float playerRadius = 1.0f;
+    private float playerHeight = 2.0f;
+
     public bool isMoving = false;
     private bool canMove;
 
     public int NumLives { get => numLives; set => numLives = value; }
+    public float Speed { get => speed; set => speed = value; }
+    public float SpeedMultiplyer { get => speedMultiplyer; set => speedMultiplyer = value; }
 
     // Start is called before the first frame update
     void Start()
@@ -25,17 +33,41 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HandlePowerUpInteraction();
         HandleMovement();
+    }
+
+    private void HandlePowerUpInteraction()
+    {
+        float moveDistance = Time.deltaTime * Speed * SpeedMultiplyer;
+        if (Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, transform.forward, out RaycastHit hit, moveDistance))
+        {
+            if (hit.collider.TryGetComponent<SpeedPowerUp>(out SpeedPowerUp spdpowerup))
+            {
+
+                spdpowerup.Activate(this);
+                StartCoroutine(FadeSpeed());
+                spdpowerup.DestroySelf();
+            }
+            else if (hit.collider.TryGetComponent<PowerUp>(out PowerUp powerup))
+            {
+                powerup.Activate(this);
+                powerup.DestroySelf();
+            }
+        }
+
+
+
+
+
     }
 
     private void HandleMovement()
     {
         Vector2 inputVector = inputManager.GetMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
-        float moveDistance = Time.deltaTime * speed;
+        float moveDistance = Time.deltaTime * Speed * SpeedMultiplyer;
         isMoving = moveDir != Vector3.zero;
-        float playerRadius = 1.0f;
-        float playerHeight = 2.0f;
         canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
 
         //if the player is making a diagonal movement and hits a wall, it should try to decompose the movement so it cam move sideways whilst hugging the wall
@@ -89,4 +121,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    private IEnumerator FadeSpeed()
+    {
+        yield return new WaitForSeconds(powerUpDuration);
+        SpeedMultiplyer /= 1.5f;
+    }
 }
