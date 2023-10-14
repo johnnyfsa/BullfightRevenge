@@ -10,9 +10,10 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] List<PowerUp> powerUps;
     private ObjectPool<Enemy> _enemyPool;
     private ObjectPool<PowerUp> _powerUpPool;
-
     [SerializeField] float enemySpawnTimer = 1.0f;
     [SerializeField] float powerUpSpawnTimer = 2.0f;
+    [SerializeField] int MaxNumEnemies = 20;
+    [SerializeField] int MaxNumPowerUps = 5;
 
     void Awake()
     {
@@ -110,7 +111,10 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
-            SpawnEnemy();
+            if (_enemyPool.CountActive <= MaxNumEnemies)
+            {
+                _enemyPool.Get();
+            }
             yield return new WaitForSeconds(enemySpawnTimer);
         }
 
@@ -119,7 +123,10 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
-            SpawnPowerUp();
+            if (_powerUpPool.CountActive <= MaxNumPowerUps)
+            {
+                _powerUpPool.Get();
+            }
             yield return new WaitForSeconds(powerUpSpawnTimer);
         }
 

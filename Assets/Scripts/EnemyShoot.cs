@@ -8,7 +8,9 @@ public class EnemyShoot : MonoBehaviour
     [SerializeField] Projectile projectilePrefab;
     Vector3 offset = new Vector3(0, 1.82f, 1.13f);
     [SerializeField] float shotCooldown = 1;
+    [SerializeField] float rotationSpeed = 5f;
     private ObjectPool<Projectile> _projectilePool;
+    private Player player;
 
     void Awake()
     {
@@ -17,13 +19,20 @@ public class EnemyShoot : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = FindObjectOfType<Player>();
         StartCoroutine(Shoot(shotCooldown));
     }
 
     // Update is called once per frame
     void Update()
     {
+        TurnToPlayer();
+    }
 
+    private void TurnToPlayer()
+    {
+        Vector3 playerDirection = player.transform.position - transform.position;
+        transform.forward = Vector3.Slerp(transform.forward, playerDirection, rotationSpeed * Time.deltaTime);
     }
 
     private Projectile CreateProjectile()

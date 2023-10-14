@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3946016987722143574}
   - component: {fileID: 6517361607722140287}
   - component: {fileID: 323279833908047334}
+  - component: {fileID: 7468145637593597750}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -73,6 +74,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92a14bd7b666315449e114f0577a89c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &7468145637593597750
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5309163424158820885}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.1113212, y: 3.2517266, z: 1}
+  m_Center: {x: -0.024319561, y: 1.6163421, z: 0}
 --- !u!1001 &6750285784618239140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83,7 +105,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100046, guid: 7b6675de545141649953fd8adec4561b, type: 3}
       propertyPath: m_Name
-      value: SimpleFarmer_Man_02_White
+      value: VisualComponent
       objectReference: {fileID: 0}
     - target: {fileID: 400046, guid: 7b6675de545141649953fd8adec4561b, type: 3}
       propertyPath: m_LocalScale.x
@@ -144,37 +166,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 100046, guid: 7b6675de545141649953fd8adec4561b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6530168938651264524}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b6675de545141649953fd8adec4561b, type: 3}
---- !u!1 &6750285784618336874 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 100046, guid: 7b6675de545141649953fd8adec4561b, type: 3}
-  m_PrefabInstance: {fileID: 6750285784618239140}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &6530168938651264524
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6750285784618336874}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.1292509, y: 3.7077532, z: 1}
-  m_Center: {x: 0.008703165, y: 1.3538767, z: 0}
 --- !u!4 &6750285784618376714 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400046, guid: 7b6675de545141649953fd8adec4561b, type: 3}

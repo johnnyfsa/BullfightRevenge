@@ -115,3 +115,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 3311844856952894315, guid: 263b051c6be9e8348916653e83dcbde0, type: 3}
   shotCooldown: 1.5
+  rotationSpeed: 2.5

@@ -14,6 +14,8 @@ public class Player : MonoBehaviour
     [SerializeField] float speedMultiplyer = 1f;
     [SerializeField] float powerUpDuration = 5f;
 
+    [SerializeField] bool stompActive = false;
+
     private float playerRadius = 1.0f;
     private float playerHeight = 2.0f;
 
@@ -23,6 +25,21 @@ public class Player : MonoBehaviour
     public int NumLives { get => numLives; set => numLives = value; }
     public float Speed { get => speed; set => speed = value; }
     public float SpeedMultiplyer { get => speedMultiplyer; set => speedMultiplyer = value; }
+    public bool StompActive { get => stompActive; set => stompActive = value; }
+
+    private void Awake()
+    {
+        inputManager.OnActionButtonPressed += HandleActionButtonPressed;
+    }
+
+    private void HandleActionButtonPressed(object sender, EventArgs e)
+    {
+        if (stompActive)
+        {
+            CheckForEnemiesInArea();
+            stompActive = false;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -125,5 +142,17 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(powerUpDuration);
         SpeedMultiplyer /= 1.5f;
+    }
+
+    private void CheckForEnemiesInArea()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 3.0f);
+        foreach (Collider c in colliders)
+        {
+            if (c.TryGetComponent<Enemy>(out Enemy enemy))
+            {
+                enemy.Explode();
+            }
+        }
     }
 }

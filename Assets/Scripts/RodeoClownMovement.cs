@@ -4,43 +4,68 @@ using UnityEngine;
 
 public class RodeoClownMovement : MonoBehaviour
 {
-    private Transform player;
+    private Player player;
     [SerializeField] float speed = 2f;
     [SerializeField] float rotationSpeed = 5f;
-    [SerializeField] float distanceThreshold = 5f;
+    [SerializeField] float distanceThresholdToPlayer = 5f;
+    [SerializeField] float distanceThresholdToCenter = 3.0f;
+
+    private Vector3 moveDir;
     private float distanceToPlayer;
+    private float distanceToCenter;
+    private Vector3 centerOfArena;
+
+
     private void Start()
     {
+        centerOfArena = new Vector3(Random.Range(-3f, 3f), transform.position.y, Random.Range(-3f, 3f));
         //using the player name is a bad idea because it can change
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player").GetComponent<Player>();
     }
     private void Update()
     {
         //calculate distance to player
-        distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        //if shorter than distanceToPlayer run away from player
-        if (distanceToPlayer < distanceThreshold)
+        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        distanceToCenter = Vector3.Distance(transform.position, centerOfArena);
+        //if shorter than distanceToPlayer, run away from player
+        if (distanceToPlayer < distanceThresholdToPlayer)
         {
-            RunAwayFromPlayer();
+            if (player.isMoving)
+            {
+                RunAwayFromPlayer();
+            }
+            else
+            {
+                TurnToPlayer();
+            }
         }
-        //if longer than distanceToPlayer run to center of arena
+        //if longer than distanceToPlayer, run to center of arena
         else
         {
-            RunToCenterOfArena();
+            if (distanceToCenter > distanceThresholdToCenter)
+            {
+                RunToCenterOfArena();
+            }
         }
-
     }
     private void RunAwayFromPlayer()
     {
-        Vector3 awayDirection = transform.position - player.position;
-        transform.Translate(awayDirection.normalized * speed * Time.deltaTime, Space.World);
-        transform.forward = Vector3.Slerp(transform.forward, awayDirection, rotationSpeed * Time.deltaTime);
+        moveDir = transform.position - player.transform.position;
+        transform.Translate(moveDir.normalized * speed * Time.deltaTime, Space.World);
+        transform.forward = Vector3.Slerp(transform.forward, moveDir, rotationSpeed * Time.deltaTime);
     }
     private void RunToCenterOfArena()
     {
-        Vector3 centerOfArena = new Vector3(0, transform.position.y, 0);
-        Vector3 directionToCenter = centerOfArena - transform.position;
-        transform.Translate(directionToCenter.normalized * speed * Time.deltaTime, Space.World);
-        transform.forward = Vector3.Slerp(transform.forward, directionToCenter, rotationSpeed * Time.deltaTime);
+        moveDir = centerOfArena - transform.position;
+        transform.Translate(moveDir.normalized * speed * Time.deltaTime, Space.World);
+        transform.forward = Vector3.Slerp(transform.forward, moveDir, rotationSpeed * Time.deltaTime);
     }
+
+    private void TurnToPlayer()
+    {
+        Vector3 playerDirection = player.transform.position - transform.position;
+        transform.forward = Vector3.Slerp(transform.forward, playerDirection, rotationSpeed * Time.deltaTime);
+    }
+
+
 }
