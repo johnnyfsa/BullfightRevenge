@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] float powerUpDuration = 5f;
 
     [SerializeField] bool stompActive = false;
+    private ParticleSystem stompShockWave;
 
     private float playerRadius = 1.0f;
     private float playerHeight = 2.0f;
@@ -36,6 +37,8 @@ public class Player : MonoBehaviour
     {
         if (stompActive)
         {
+            stompShockWave.gameObject.SetActive(true);
+            StartCoroutine(ConludeStomping());
             CheckForEnemiesInArea();
             stompActive = false;
         }
@@ -44,6 +47,11 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        stompShockWave = GetComponentInChildren<ParticleSystem>();
+        if (stompShockWave != null)
+        {
+            stompShockWave.Stop();
+        }
 
     }
 
@@ -142,6 +150,12 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(powerUpDuration);
         SpeedMultiplyer /= 1.5f;
+    }
+
+    private IEnumerator ConludeStomping()
+    {
+        yield return new WaitForSeconds(stompShockWave.main.duration);
+        stompShockWave.gameObject.SetActive(false);
     }
 
     private void CheckForEnemiesInArea()

@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UIElements;
 
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] List<Enemy> enemies;
     [SerializeField] List<PowerUp> powerUps;
+    [SerializeField] FXController explosionPrefab;
     private ObjectPool<Enemy> _enemyPool;
     private ObjectPool<PowerUp> _powerUpPool;
+    private ObjectPool<FXController> _explosionPool;
     [SerializeField] float enemySpawnTimer = 1.0f;
     [SerializeField] float powerUpSpawnTimer = 2.0f;
     [SerializeField] int MaxNumEnemies = 20;
@@ -19,7 +22,18 @@ public class SpawnManager : MonoBehaviour
     {
         _enemyPool = new ObjectPool<Enemy>(SpawnEnemy, null, OnReturnEnemyToPool, defaultCapacity: 20);
         _powerUpPool = new ObjectPool<PowerUp>(SpawnPowerUp, null, OnReturnPowerUpToPool, defaultCapacity: 5);
+        _explosionPool = new ObjectPool<FXController>(SpawnExplosion, null, OnReturnExplosionToPool, defaultCapacity: 20);
+    }
 
+    private void OnReturnExplosionToPool(FXController controller)
+    {
+        controller.gameObject.SetActive(false);
+    }
+
+    private FXController SpawnExplosion()
+    {
+        FXController explosion = Instantiate(explosionPrefab);
+        return explosion;
     }
 
     private void OnReturnPowerUpToPool(PowerUp powerUp)
@@ -75,7 +89,7 @@ public class SpawnManager : MonoBehaviour
                 enemyRotation = 90.0f;
                 enemy.transform.position = enemyPos;
                 enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
-                enemy.Init(_enemyPool);
+                enemy.Init(_enemyPool, _explosionPool);
                 break;
             //top
             case 1:
@@ -83,7 +97,7 @@ public class SpawnManager : MonoBehaviour
                 enemyRotation = 180.0f;
                 enemy.transform.position = enemyPos;
                 enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
-                enemy.Init(_enemyPool);
+                enemy.Init(_enemyPool, _explosionPool);
                 break;
             //right
             case 2:
@@ -91,7 +105,7 @@ public class SpawnManager : MonoBehaviour
                 enemyRotation = -90.0f;
                 enemy.transform.position = enemyPos;
                 enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
-                enemy.Init(_enemyPool);
+                enemy.Init(_enemyPool, _explosionPool);
                 break;
             //bottom
             case 3:
@@ -99,7 +113,7 @@ public class SpawnManager : MonoBehaviour
                 enemyRotation = 0;
                 enemy.transform.position = enemyPos;
                 enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
-                enemy.Init(_enemyPool);
+                enemy.Init(_enemyPool, _explosionPool);
                 break;
 
         }
