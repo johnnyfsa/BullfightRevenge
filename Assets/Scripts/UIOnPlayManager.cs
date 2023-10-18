@@ -9,6 +9,8 @@ public class UIOnPlayManager : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] InputManager inputManager;
     private Label numLives;
+    private Label score;
+
     private void Awake()
     {
         player.OnLivesChanged += UpdateLives;
@@ -43,7 +45,14 @@ public class UIOnPlayManager : MonoBehaviour
     private void OnEnable()
     {
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
+        score = root.Q<Label>("Score");
         numLives = root.Q<Label>("NumLives");
         numLives.text = "Num Lives: 3";
+        score.text = "Score: 0";
+    }
+
+    internal void UpdateScore(int score)
+    {
+        this.score.text = "Score: " + score;
     }
 }

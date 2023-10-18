@@ -9,16 +9,20 @@ public class GameManager : MonoBehaviour
     [SerializeField] InputManager inputManager;
     [SerializeField] UIOnPlayManager UIManager;
 
+    [SerializeField] int score;
+
     [SerializeField] bool isPaused;
 
-    public static GameManager Instance { get; private set; }
+    public static GameManager Instance { get => _instance; private set => _instance = value; }
+
+    public int Score { get => score; set => score = value; }
 
     private void Awake()
     {
         // Ensure that only one instance of the singleton exists.
-        if (_instance == null)
+        if (Instance == null)
         {
-            _instance = this;
+            Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
         else
@@ -51,5 +55,11 @@ public class GameManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = 1;
+    }
+
+    public void ChangeScore(int amount)
+    {
+        Score += amount;
+        UIManager.UpdateScore(Score);
     }
 }

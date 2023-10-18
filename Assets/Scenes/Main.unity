@@ -533,6 +533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 522923344}
   UIManager: {fileID: 1453470679}
+  score: 0
   isPaused: 0
 --- !u!4 &241591513
 Transform:
@@ -1282,37 +1283,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3678523598821066665, guid: 8aa557e54c6196e4895a56af24dc7f6b, type: 3}
   m_PrefabInstance: {fileID: 1061760995}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &793041349
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 793041350}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &793041350
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 793041349}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 3.51}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &853029814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3092,6 +3062,10 @@ PrefabInstance:
       value: -0.52259076
       objectReference: {fileID: 0}
     - target: {fileID: 5840144949455816841, guid: 03895ffd1aab776489da328852ae2de8, type: 3}
+      propertyPath: speed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840144949455816841, guid: 03895ffd1aab776489da328852ae2de8, type: 3}
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 522923344}
@@ -3215,4 +3189,3 @@ SceneRoots:
   - {fileID: 705087562}
   - {fileID: 1453470678}
   - {fileID: 241591513}
-  - {fileID: 793041350}
