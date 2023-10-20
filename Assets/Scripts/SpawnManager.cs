@@ -18,6 +18,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] int MaxNumEnemies = 20;
     [SerializeField] int MaxNumPowerUps = 5;
 
+    public float EnemySpawnTimer { get => enemySpawnTimer; set => enemySpawnTimer = value; }
+
     void Awake()
     {
         _enemyPool = new ObjectPool<Enemy>(SpawnEnemy, null, OnReturnEnemyToPool, defaultCapacity: 20);
@@ -129,7 +131,7 @@ public class SpawnManager : MonoBehaviour
             {
                 _enemyPool.Get();
             }
-            yield return new WaitForSeconds(enemySpawnTimer);
+            yield return new WaitForSeconds(EnemySpawnTimer);
         }
 
     }

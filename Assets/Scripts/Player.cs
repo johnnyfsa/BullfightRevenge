@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] bool stompActive = false;
     private ParticleSystem stompShockWave;
+    private ParticleSystem riseSmoke;
 
     private float playerRadius = 1.0f;
     private float playerHeight = 2.0f;
@@ -47,12 +48,16 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stompShockWave = GetComponentInChildren<ParticleSystem>();
+        stompShockWave = GetComponentsInChildren<ParticleSystem>()[0];
         if (stompShockWave != null)
         {
             stompShockWave.Stop();
         }
-
+        riseSmoke = GetComponentsInChildren<ParticleSystem>()[1];
+        if (riseSmoke != null)
+        {
+            riseSmoke.Stop();
+        }
     }
 
     // Update is called once per frame
@@ -71,6 +76,7 @@ public class Player : MonoBehaviour
             {
 
                 spdpowerup.Activate(this);
+                riseSmoke.Play();
                 StartCoroutine(FadeSpeed());
                 spdpowerup.DestroySelf();
             }
@@ -144,12 +150,17 @@ public class Player : MonoBehaviour
         {
             OnLivesChanged?.Invoke(this, EventArgs.Empty);
         }
+        else if (NumLives <= 0)
+        {
+            // GameManager.Instance.GameOver();
+        }
     }
 
     private IEnumerator FadeSpeed()
     {
         yield return new WaitForSeconds(powerUpDuration);
         SpeedMultiplyer /= 1.5f;
+        riseSmoke.Stop();
     }
 
     private IEnumerator ConludeStomping()

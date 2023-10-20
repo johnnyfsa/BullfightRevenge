@@ -47,7 +47,7 @@ public class UIOnPlayManager : MonoBehaviour
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         score = root.Q<Label>("Score");
         numLives = root.Q<Label>("NumLives");
-        numLives.text = "Num Lives: 3";
+        numLives.text = "Num Lives:" + player.NumLives;
         score.text = "Score: 0";
     }
 

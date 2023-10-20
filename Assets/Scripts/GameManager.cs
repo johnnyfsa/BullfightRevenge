@@ -5,13 +5,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    enum DiffcultyLevel { Easy, Medium, Hard };
     private static GameManager _instance;
     [SerializeField] InputManager inputManager;
     [SerializeField] UIOnPlayManager UIManager;
-
     [SerializeField] int score;
-
+    [SerializeField] DiffcultyLevel difficulty;
     [SerializeField] bool isPaused;
+    [SerializeField] SpawnManager spawnManager;
+    [SerializeField] bool isGameOver;
+    [SerializeField] int scoreThreshold;
+
+    public bool IsGameOver { get => isGameOver; set => isGameOver = value; }
 
     public static GameManager Instance { get => _instance; private set => _instance = value; }
 
@@ -30,6 +35,7 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         inputManager.OnPauseButtonPressed += ChangeGameState;
+        difficulty = DiffcultyLevel.Easy;
     }
 
     private void ChangeGameState(object sender, EventArgs e)
@@ -61,5 +67,48 @@ public class GameManager : MonoBehaviour
     {
         Score += amount;
         UIManager.UpdateScore(Score);
+        CheckScoreThreshold();
+    }
+
+    private void CheckScoreThreshold()
+    {
+        if (score >= scoreThreshold)
+        {
+            scoreThreshold *= 2;
+            if (difficulty == DiffcultyLevel.Hard)
+            {
+                return;
+            }
+            ChangeDifficulty(difficulty + 1);
+        }
+    }
+
+    private void ChangeDifficulty(DiffcultyLevel newDifficulty)
+    {
+        float spawnTimer = 5.0f;
+        difficulty = newDifficulty;
+        switch (difficulty)
+        {
+            case DiffcultyLevel.Easy:
+                spawnTimer = 5.0f;
+                break;
+            case DiffcultyLevel.Medium:
+                spawnTimer = 3.0f;
+                break;
+            case DiffcultyLevel.Hard:
+                spawnTimer = 2.0f;
+                break;
+        }
+        spawnManager.EnemySpawnTimer = spawnTimer;
+
+    }
+
+    public void GameOver()
+    {
+        isGameOver = true;
+        //UIManager.GameOver();
+        spawnManager.gameObject.SetActive(false);
+        inputManager.OnPauseButtonPressed -= ChangeGameState;
+        //Destroy(this.gameObject); 
     }
 }

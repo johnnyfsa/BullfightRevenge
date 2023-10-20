@@ -534,7 +534,11 @@ MonoBehaviour:
   inputManager: {fileID: 522923344}
   UIManager: {fileID: 1453470679}
   score: 0
+  difficulty: 0
   isPaused: 0
+  spawnManager: {fileID: 705087561}
+  isGameOver: 0
+  scoreThreshold: 20
 --- !u!4 &241591513
 Transform:
   m_ObjectHideFlags: 0
@@ -1109,7 +1113,7 @@ MonoBehaviour:
   - {fileID: -430899677435207144, guid: 9af1e72fcb67a89478645704d0eb527a, type: 3}
   - {fileID: -6093246447338148569, guid: 3e25e8b537526b8489d2603444c393a3, type: 3}
   explosionPrefab: {fileID: -5651874859080321455, guid: 6d35a04e7e440f948823de35488ec8fd, type: 3}
-  enemySpawnTimer: 2
+  enemySpawnTimer: 5
   powerUpSpawnTimer: 5
   MaxNumEnemies: 20
   MaxNumPowerUps: 5
@@ -3147,6 +3151,10 @@ PrefabInstance:
     - target: {fileID: 5840144949455816841, guid: 03895ffd1aab776489da328852ae2de8, type: 3}
       propertyPath: speed
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840144949455816841, guid: 03895ffd1aab776489da328852ae2de8, type: 3}
+      propertyPath: numLives
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5840144949455816841, guid: 03895ffd1aab776489da328852ae2de8, type: 3}
       propertyPath: inputManager
