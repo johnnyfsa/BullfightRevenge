@@ -22,9 +22,24 @@ public class SpawnManager : MonoBehaviour
 
     void Awake()
     {
-        _enemyPool = new ObjectPool<Enemy>(SpawnEnemy, null, OnReturnEnemyToPool, defaultCapacity: 20);
-        _powerUpPool = new ObjectPool<PowerUp>(SpawnPowerUp, null, OnReturnPowerUpToPool, defaultCapacity: 5);
-        _explosionPool = new ObjectPool<FXController>(SpawnExplosion, null, OnReturnExplosionToPool, defaultCapacity: 20);
+        _enemyPool = new ObjectPool<Enemy>(SpawnEnemy, OnTakeEnemyFromPool, OnReturnEnemyToPool, defaultCapacity: 20);
+        _powerUpPool = new ObjectPool<PowerUp>(SpawnPowerUp, OnTakePowerUpFromPool, OnReturnPowerUpToPool, defaultCapacity: 5);
+        _explosionPool = new ObjectPool<FXController>(SpawnExplosion, OnTakeExplosionFromPool, OnReturnExplosionToPool, defaultCapacity: 20);
+    }
+
+    private void OnTakeExplosionFromPool(FXController controller)
+    {
+        controller.gameObject.SetActive(true);
+    }
+
+    private void OnTakePowerUpFromPool(PowerUp up)
+    {
+        up.gameObject.SetActive(true);
+    }
+
+    private void OnTakeEnemyFromPool(Enemy enemy)
+    {
+        enemy.gameObject.SetActive(true);
     }
 
     private void OnReturnExplosionToPool(FXController controller)
