@@ -20,6 +20,10 @@ public class EnemyShoot : MonoBehaviour
     void Start()
     {
         player = FindObjectOfType<Player>();
+    }
+
+    void OnEnable()
+    {
         StartCoroutine(Shoot(shotCooldown));
     }
 
