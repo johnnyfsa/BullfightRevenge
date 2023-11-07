@@ -5,7 +5,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    //I want to create a new event handler to send the information of which powerup is active
+    public class PowerUpArgs : EventArgs
+    {
+        public float _speedMultiplier;
+        public bool _isStompActive;
+        public PowerUpArgs(float speedMultiplyer, bool isStompActive)
+        {
+            _speedMultiplier = speedMultiplyer;
+            _isStompActive = isStompActive;
+        }
+    }
     public event EventHandler OnLivesChanged;
+    public event EventHandler<PowerUpArgs> OnPowerUpChanged;
     [SerializeField] InputManager inputManager;
     [SerializeField] float speed = 5f;
     [SerializeField] float rotationSpeed = 5f;
@@ -38,10 +50,11 @@ public class Player : MonoBehaviour
     {
         if (stompActive)
         {
-            stompShockWave.gameObject.SetActive(true);
+            stompShockWave.Play();
             StartCoroutine(ConludeStomping());
             CheckForEnemiesInArea();
             stompActive = false;
+            OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, stompActive));
         }
     }
 
@@ -76,7 +89,13 @@ public class Player : MonoBehaviour
             {
 
                 spdpowerup.Activate(this);
-                riseSmoke.Play();
+                /*it activates the smoke effect at 1.5f speed multiplier, there's no need to 
+                start the smoke animation over if the speed multiplier is over 1.5*/
+                if (speedMultiplyer <= 1.5f)
+                {
+                    riseSmoke.Play();
+                    OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, stompActive));
+                }
                 StartCoroutine(FadeSpeed());
                 spdpowerup.DestroySelf();
             }
@@ -84,6 +103,7 @@ public class Player : MonoBehaviour
             {
                 powerup.Activate(this);
                 powerup.DestroySelf();
+                OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, stompActive));
             }
         }
 
@@ -160,13 +180,17 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(powerUpDuration);
         SpeedMultiplyer /= 1.5f;
-        riseSmoke.Stop();
+        if (speedMultiplyer == 1.0f)
+        {
+            riseSmoke.Stop();
+            OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, stompActive));
+        }
     }
 
     private IEnumerator ConludeStomping()
     {
         yield return new WaitForSeconds(stompShockWave.main.duration);
-        stompShockWave.gameObject.SetActive(false);
+        stompShockWave.Stop();
     }
 
     private void CheckForEnemiesInArea()

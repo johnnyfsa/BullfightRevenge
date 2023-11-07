@@ -1972,6 +1972,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6320365537721954509, guid: b7666fcd6e1f21d47943a38f3c180f17, type: 3}
       propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6320365537721954509, guid: b7666fcd6e1f21d47943a38f3c180f17, type: 3}
+      propertyPath: playOnAwake
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8611612713298152997, guid: b7666fcd6e1f21d47943a38f3c180f17, type: 3}
@@ -2247,6 +2251,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1988232667}
   inputManager: {fileID: 522923344}
+  velocityPowerUpIcon: {fileID: 2800000, guid: 4eb8a12c4739b6d45a019bab1cbff792, type: 3}
+  stompPowerUpIcon: {fileID: 2800000, guid: 69d7bc213fa7d7a44907dfd73324fa21, type: 3}
 --- !u!1001 &1486201923
 PrefabInstance:
   m_ObjectHideFlags: 0
