@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     enum DiffcultyLevel { Easy, Medium, Hard };
     private static GameManager _instance;
     [SerializeField] InputManager inputManager;
-    [SerializeField] UIOnPlayManager UIManager;
+    [SerializeField] UIManager uIManager;
     [SerializeField] int score;
     [SerializeField] DiffcultyLevel difficulty;
     [SerializeField] bool isPaused;
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     private void ChangeGameState(object sender, EventArgs e)
     {
-        UIManager.ChangeUIGameState();
+        uIManager.ChangePauseState();
         if (isPaused)
         {
             ResumeGame();
@@ -55,18 +55,20 @@ public class GameManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0;
+        inputManager.SwitchActiveActionMap();
     }
 
     private void ResumeGame()
     {
         isPaused = false;
         Time.timeScale = 1;
+        inputManager.SwitchActiveActionMap();
     }
 
     public void ChangeScore(int amount)
     {
         Score += amount;
-        UIManager.UpdateScore(Score);
+        //HUDManager.UpdateScore(Score);
         CheckScoreThreshold();
     }
 

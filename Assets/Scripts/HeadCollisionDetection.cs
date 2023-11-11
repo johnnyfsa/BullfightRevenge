@@ -9,7 +9,7 @@ public class HeadCollisionDetection : MonoBehaviour
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
         if (enemy != null)
         {
-            Debug.Log("Head collided with enemy:" + enemy.name);
+            //Debug.Log("Head collided with enemy:" + enemy.name);
             enemy.Explode();
         }
     }

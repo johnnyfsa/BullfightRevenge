@@ -44,6 +44,7 @@ public class Projectile : MonoBehaviour
             if (hit.collider.TryGetComponent<Player>(out Player player))
             {
                 player.AddLives(-damage);
+                AudioManager.Instance.PlaySFX(SoundType.BullHit);
                 DestroyProjectile();
             }
         }

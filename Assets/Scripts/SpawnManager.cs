@@ -18,6 +18,8 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] int MaxNumEnemies = 20;
     [SerializeField] int MaxNumPowerUps = 5;
 
+    private int previousPowerUp;
+
     public float EnemySpawnTimer { get => enemySpawnTimer; set => enemySpawnTimer = value; }
 
     void Awake()
@@ -25,6 +27,7 @@ public class SpawnManager : MonoBehaviour
         _enemyPool = new ObjectPool<Enemy>(SpawnEnemy, OnTakeEnemyFromPool, OnReturnEnemyToPool, defaultCapacity: 20);
         _powerUpPool = new ObjectPool<PowerUp>(SpawnPowerUp, OnTakePowerUpFromPool, OnReturnPowerUpToPool, defaultCapacity: 5);
         _explosionPool = new ObjectPool<FXController>(SpawnExplosion, OnTakeExplosionFromPool, OnReturnExplosionToPool, defaultCapacity: 20);
+        previousPowerUp = -1;
     }
 
     private void OnTakeExplosionFromPool(FXController controller)
@@ -61,6 +64,11 @@ public class SpawnManager : MonoBehaviour
     private PowerUp SpawnPowerUp()
     {
         int powerUpToSpawn = UnityEngine.Random.Range(0, powerUps.Count);
+        while (powerUpToSpawn == previousPowerUp)
+        {
+            powerUpToSpawn = UnityEngine.Random.Range(0, powerUps.Count);
+        }
+        previousPowerUp = powerUpToSpawn;
         Vector3 powerUpPosition = new Vector3(UnityEngine.Random.Range(-9f, 10f), 0.3f, UnityEngine.Random.Range(-9f, 10f));
         PowerUp powerUp = Instantiate(powerUps[powerUpToSpawn]);
         powerUp.transform.position = powerUpPosition;

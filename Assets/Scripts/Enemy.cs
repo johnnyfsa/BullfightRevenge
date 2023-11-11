@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     public void Explode()
     {
         _pool.Release(this);
+        AudioManager.Instance.PlaySFX(SoundType.EnemyHit);
         var explosion = _fxPool.Get();
         explosion.transform.position = this.transform.position;
         explosion.Init(_fxPool);

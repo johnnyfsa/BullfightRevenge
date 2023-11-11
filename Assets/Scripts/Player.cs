@@ -50,6 +50,10 @@ public class Player : MonoBehaviour
     {
         if (stompActive)
         {
+            if (GameManager.Instance.Score % 3 == 0)
+            {
+                AudioManager.Instance.PlaySFX(SoundType.Yell);
+            }
             stompShockWave.Play();
             StartCoroutine(ConludeStomping());
             CheckForEnemiesInArea();
@@ -89,6 +93,7 @@ public class Player : MonoBehaviour
             {
 
                 spdpowerup.Activate(this);
+                AudioManager.Instance.PlaySFX(SoundType.SpeedPowerupPickup);
                 /*it activates the smoke effect at 1.5f speed multiplier, there's no need to 
                 start the smoke animation over if the speed multiplier is over 1.5*/
                 if (speedMultiplyer <= 1.5f)
@@ -101,6 +106,7 @@ public class Player : MonoBehaviour
             }
             else if (hit.collider.TryGetComponent<PowerUp>(out PowerUp powerup))
             {
+                AudioManager.Instance.PlaySFX(SoundType.PowerUpPickup);
                 powerup.Activate(this);
                 powerup.DestroySelf();
                 OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, stompActive));
@@ -189,6 +195,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator ConludeStomping()
     {
+        AudioManager.Instance.PlaySFX(SoundType.Stomp);
         yield return new WaitForSeconds(stompShockWave.main.duration);
         stompShockWave.Stop();
     }
