@@ -34,11 +34,16 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        inputManager.OnPauseButtonPressed += ChangeGameState;
+        inputManager.OnPauseButtonPressed += PauseButtonReaction;
         difficulty = DiffcultyLevel.Easy;
     }
 
-    private void ChangeGameState(object sender, EventArgs e)
+    private void PauseButtonReaction(object sender, EventArgs e)
+    {
+        ChangeGameState();
+    }
+
+    public void ChangeGameState()
     {
         uIManager.ChangePauseState();
         if (isPaused)
@@ -111,7 +116,7 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
         //UIManager.GameOver();
         spawnManager.gameObject.SetActive(false);
-        inputManager.OnPauseButtonPressed -= ChangeGameState;
+        inputManager.OnPauseButtonPressed -= PauseButtonReaction;
         //Destroy(this.gameObject); 
     }
 }

@@ -3,10 +3,10 @@
     <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.61); flex-direction: row;">
         <ui:VisualElement name="left" style="flex-grow: 1; width: 100%; height: 100%;" />
         <ui:VisualElement name="middle" style="width: 100%; height: 100%; flex-grow: 1; align-items: center; justify-content: center;">
-            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="resume" class="PauseMenuButtonHeader" style="width: 200px; height: 50px;" />
-            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="restart" class="PauseMenuButton" />
-            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="options" class="PauseMenuButton" />
-            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="quit" class="PauseMenuButton" />
+            <ui:Button text="Resume" parse-escape-sequences="true" display-tooltip-when-elided="true" name="resume" class="PauseMenuButton" style="width: 200px; height: 50px;" />
+            <ui:Button text="Restart" parse-escape-sequences="true" display-tooltip-when-elided="true" name="restart" class="PauseMenuButton" />
+            <ui:Button text="Option" parse-escape-sequences="true" display-tooltip-when-elided="true" name="options" class="PauseMenuButton" />
+            <ui:Button text="Quit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="quit" class="PauseMenuButton" />
         </ui:VisualElement>
         <ui:VisualElement name="right" style="flex-grow: 1; width: 100%; height: 100%;" />
     </ui:VisualElement>

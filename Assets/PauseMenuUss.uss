@@ -79,3 +79,24 @@
     margin-bottom: 5px;
     margin-left: 5px;
 }
+
+.PauseMenuButton:active {
+    height: 50px;
+    font-size: 25px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    background-color: rgb(113, 112, 111);
+    color: rgb(0, 0, 0);
+    width: 200px;
+    scale: 1.1 1.1;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}

@@ -27,7 +27,13 @@ public class PauseMenuController : MonoBehaviour
     {
         if (evt.keyCode == KeyCode.Space || evt.keyCode == KeyCode.Return)
         {
-            print("confirmed action");
+            Button button = buttons.Find(x => x == x.panel.focusController.focusedElement);
+            switch (button.name)
+            {
+                case "resume":
+                    GameManager.Instance.ChangeGameState();
+                    break;
+            }
         }
     }
 
@@ -44,6 +50,20 @@ public class PauseMenuController : MonoBehaviour
                 }
                 break;
             case KeyCode.DownArrow:
+                index++;
+                if (index > buttons.Count - 1)
+                {
+                    index = 0;
+                }
+                break;
+            case KeyCode.W:
+                index--;
+                if (index < 0)
+                {
+                    index = buttons.Count - 1;
+                }
+                break;
+            case KeyCode.S:
                 index++;
                 if (index > buttons.Count - 1)
                 {
