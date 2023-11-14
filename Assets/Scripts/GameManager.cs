@@ -111,6 +111,20 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void QuitGame()
+    {
+        //quit the editor
+        if (Application.isEditor)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+        else
+        {
+            // O jogo está sendo executado como aplicativo build
+            Debug.Log("Executando como Aplicativo");
+        }
+    }
+
     public void GameOver()
     {
         isGameOver = true;

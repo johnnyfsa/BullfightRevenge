@@ -33,6 +33,9 @@ public class PauseMenuController : MonoBehaviour
                 case "resume":
                     GameManager.Instance.ChangeGameState();
                     break;
+                case "quit":
+                    GameManager.Instance.QuitGame();
+                    break;
             }
         }
     }
