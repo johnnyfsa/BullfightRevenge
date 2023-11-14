@@ -1,3 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.61);" />
+    <Style src="project://database/Assets/PauseMenuUss.uss?fileID=7433441132597879392&amp;guid=cfd10ab4c2718be4e93515f0a20fb86e&amp;type=3#PauseMenuUss" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.61); flex-direction: row;">
+        <ui:VisualElement name="left" style="flex-grow: 1; width: 100%; height: 100%;" />
+        <ui:VisualElement name="middle" style="width: 100%; height: 100%; flex-grow: 1; align-items: center; justify-content: center;">
+            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="resume" class="PauseMenuButtonHeader" style="width: 200px; height: 50px;" />
+            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="restart" class="PauseMenuButton" />
+            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="options" class="PauseMenuButton" />
+            <ui:Button text="Button" parse-escape-sequences="true" display-tooltip-when-elided="true" name="quit" class="PauseMenuButton" />
+        </ui:VisualElement>
+        <ui:VisualElement name="right" style="flex-grow: 1; width: 100%; height: 100%;" />
+    </ui:VisualElement>
 </ui:UXML>

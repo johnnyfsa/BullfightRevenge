@@ -17,7 +17,6 @@ public class InputManager : MonoBehaviour
         playerInput.Player.Pause.performed += Pause_performed;
         playerInput.UI.Unpause.performed += Pause_performed;
     }
-
     private void Pause_performed(InputAction.CallbackContext context)
     {
         OnPauseButtonPressed?.Invoke(this, EventArgs.Empty);
@@ -37,6 +36,7 @@ public class InputManager : MonoBehaviour
         // print(inputVector);
         return inputVector;
     }
+
     public void SwitchActiveActionMap()
     {
         if (playerInput.Player.enabled)
@@ -51,4 +51,6 @@ public class InputManager : MonoBehaviour
         }
 
     }
+
+
 }

@@ -538,7 +538,7 @@ MonoBehaviour:
   isPaused: 0
   spawnManager: {fileID: 705087561}
   isGameOver: 0
-  scoreThreshold: 20
+  scoreThreshold: 100
 --- !u!4 &241591513
 Transform:
   m_ObjectHideFlags: 0
@@ -2769,6 +2769,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1654604391}
   - component: {fileID: 1654604390}
+  - component: {fileID: 1654604392}
   m_Layer: 5
   m_Name: PauseMenuUIDocument
   m_TagString: Untagged
@@ -2807,6 +2808,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2119955725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1654604392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654604388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50d915f81a72f584baed94678c8856b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 522923344}
 --- !u!4 &1666712538 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3678523598821066665, guid: 8aa557e54c6196e4895a56af24dc7f6b, type: 3}

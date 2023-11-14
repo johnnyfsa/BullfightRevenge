@@ -14,4 +14,15 @@ public class UIManager : MonoBehaviour
         pauseScreen.uiDocument.gameObject.SetActive(!activeState);
     }
 
+    public UIOnPlayManager GetActiveUI(UIType type)
+    {
+        UIUnit screen = Array.Find(Screens, screen => screen.type == type);
+        UIOnPlayManager uiManager = screen.uiDocument.GetComponent<UIOnPlayManager>();
+        if (uiManager != null)
+        {
+            return uiManager;
+        }
+        return null;
+    }
+
 }

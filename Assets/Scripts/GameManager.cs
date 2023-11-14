@@ -68,7 +68,8 @@ public class GameManager : MonoBehaviour
     public void ChangeScore(int amount)
     {
         Score += amount;
-        //HUDManager.UpdateScore(Score);
+        UIOnPlayManager uiOnPlay = uIManager.GetActiveUI(UIType.HUD);
+        uiOnPlay.UpdateScore(Score);
         CheckScoreThreshold();
     }
 

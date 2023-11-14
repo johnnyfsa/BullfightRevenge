@@ -1,0 +1,81 @@
+.PauseMenuButton {
+    height: 50px;
+    font-size: 25px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    background-color: rgb(202, 199, 197);
+    color: rgb(0, 0, 0);
+    width: 200px;
+}
+
+.PauseMenuButtonHeader {
+    height: 12%;
+    font-size: 25px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    background-color: rgb(204, 121, 53);
+    color: rgb(185, 15, 15);
+    width: 50%;
+}
+
+.PauseMenuButton:focus {
+    height: 50px;
+    font-size: 25px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    background-color: rgb(202, 199, 197);
+    color: rgb(0, 0, 0);
+    width: 200px;
+    scale: 1.1 1.1;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.PauseMenuButtonHeader:focus {
+    height: 12%;
+    font-size: 25px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    background-color: rgb(204, 121, 53);
+    color: rgb(185, 15, 15);
+    width: 50%;
+    scale: 1.1 1.1;
+    border-left-color: rgb(233, 181, 10);
+    border-right-color: rgb(233, 181, 10);
+    border-top-color: rgb(233, 181, 10);
+    border-bottom-color: rgb(233, 181, 10);
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}

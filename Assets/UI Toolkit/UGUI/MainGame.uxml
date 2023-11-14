@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/UI%20Toolkit/UGUI/menuStyle.uss?fileID=7433441132597879392&amp;guid=f4ee9e7a1b22d5641a9f0e0b25365371&amp;type=3#menuStyle" />
     <ui:VisualElement name="HUD" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%;">
         <ui:VisualElement name="Header" style="flex-grow: 1; width: 100%; height: 20%; flex-direction: row; align-items: flex-start; justify-content: space-between;">
-            <ui:Label tabindex="-1" text="Num Lives:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumLives" class="label" />
+            <ui:Label tabindex="-1" text="Num Lives:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumLives" class="label" style="font-size: 30px;" />
             <ui:Label tabindex="-1" text="Score:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Score" class="label" />
         </ui:VisualElement>
         <ui:VisualElement name="Footer" style="flex-grow: 1; width: 100%; height: 100%; flex-direction: row; justify-content: space-between; align-self: auto; align-items: flex-end;">
