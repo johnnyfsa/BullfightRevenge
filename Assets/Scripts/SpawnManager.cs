@@ -24,10 +24,29 @@ public class SpawnManager : MonoBehaviour
 
     void Awake()
     {
+        GameManager.Instance.OnDifficultyChange += ChangeEnemySpawnTimer;
+        GameManager.Instance.OnGameOver += StopSpawning;
         _enemyPool = new ObjectPool<Enemy>(SpawnEnemy, OnTakeEnemyFromPool, OnReturnEnemyToPool, defaultCapacity: 20);
         _powerUpPool = new ObjectPool<PowerUp>(SpawnPowerUp, OnTakePowerUpFromPool, OnReturnPowerUpToPool, defaultCapacity: 5);
         _explosionPool = new ObjectPool<FXController>(SpawnExplosion, OnTakeExplosionFromPool, OnReturnExplosionToPool, defaultCapacity: 20);
         previousPowerUp = -1;
+    }
+
+    private void StopSpawning()
+    {
+        this.gameObject.SetActive(false);
+    }
+
+    private void ChangeEnemySpawnTimer(float spawnTimer)
+    {
+        enemySpawnTimer = spawnTimer;
+    }
+
+    private void OnDestroy()
+    {
+        _enemyPool.Dispose();
+        _powerUpPool.Dispose();
+        _explosionPool.Dispose();
     }
 
     private void OnTakeExplosionFromPool(FXController controller)

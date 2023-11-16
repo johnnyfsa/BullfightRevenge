@@ -7,13 +7,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public event Action<int> OnScoreChange;
+    public event Action OnGameOver;
+    public event Action<float> OnDifficultyChange;
     public event Action OnChangeGameState;
     enum DiffcultyLevel { Easy, Medium, Hard };
     private static GameManager _instance;
     [SerializeField] int score;
     [SerializeField] DiffcultyLevel difficulty;
     [SerializeField] bool isPaused;
-    [SerializeField] SpawnManager spawnManager;
     [SerializeField] bool isGameOver;
     [SerializeField] int scoreThreshold;
 
@@ -119,7 +120,7 @@ public class GameManager : MonoBehaviour
                 spawnTimer = 2.0f;
                 break;
         }
-        spawnManager.EnemySpawnTimer = spawnTimer;
+        OnDifficultyChange?.Invoke(spawnTimer);
 
     }
 
@@ -147,7 +148,7 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         //UIManager.GameOver();
-        spawnManager.gameObject.SetActive(false);
+        OnGameOver?.Invoke();
         InputManager.Instance.OnPauseButtonPressed -= PauseButtonReaction;
         //Destroy(this.gameObject); 
     }
