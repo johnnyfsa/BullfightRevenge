@@ -531,8 +531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1adae75eaeed2b04e8634d32c129b06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 522923344}
-  uIManager: {fileID: 2119955726}
   score: 0
   difficulty: 0
   isPaused: 0
@@ -2570,7 +2568,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1988232667}
-  inputManager: {fileID: 522923344}
   velocityPowerUpIcon: {fileID: 2800000, guid: 4eb8a12c4739b6d45a019bab1cbff792, type: 3}
   stompPowerUpIcon: {fileID: 2800000, guid: 69d7bc213fa7d7a44907dfd73324fa21, type: 3}
 --- !u!1001 &1486201923
@@ -2820,7 +2817,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50d915f81a72f584baed94678c8856b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputManager: {fileID: 522923344}
 --- !u!4 &1666712538 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3678523598821066665, guid: 8aa557e54c6196e4895a56af24dc7f6b, type: 3}

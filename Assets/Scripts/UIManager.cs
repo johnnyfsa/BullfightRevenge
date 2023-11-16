@@ -6,8 +6,19 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] UIUnit[] Screens;
+    // private static UIManager instance;
+    //public static UIManager Instance { get => instance; set => instance = value; }
+    private void OnEnable()
+    {
+        GameManager.Instance.OnChangeGameState += TogglePauseState;
+    }
 
-    public void ChangePauseState()
+    private void OnDisable()
+    {
+        GameManager.Instance.OnChangeGameState -= TogglePauseState;
+    }
+
+    public void TogglePauseState()
     {
         UIUnit pauseScreen = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
         bool activeState = pauseScreen.uiDocument.gameObject.activeInHierarchy;

@@ -9,13 +9,35 @@ public class InputManager : MonoBehaviour
     public event EventHandler OnActionButtonPressed;
     public event EventHandler OnPauseButtonPressed;
     PlayerInputActions playerInput;
+    private static InputManager instance;
+
+    public static InputManager Instance { get => instance; private set => instance = value; }
+
     private void Awake()
     {
+        // Ensure that only one instance of the singleton exists.
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
         playerInput = new PlayerInputActions();
         playerInput.Player.Enable();
         playerInput.Player.ActionButton.performed += ActionButton_performed;
         playerInput.Player.Pause.performed += Pause_performed;
         playerInput.UI.Unpause.performed += Pause_performed;
+    }
+
+    private void OnDestroy()
+    {
+        playerInput.Player.ActionButton.performed -= ActionButton_performed;
+        playerInput.Player.Pause.performed -= Pause_performed;
+        playerInput.UI.Unpause.performed -= Pause_performed;
+        playerInput.Dispose();
     }
     private void Pause_performed(InputAction.CallbackContext context)
     {
@@ -33,7 +55,6 @@ public class InputManager : MonoBehaviour
 
         inputVector = playerInput.Player.Move.ReadValue<Vector2>();
         inputVector = inputVector.normalized;
-        // print(inputVector);
         return inputVector;
     }
 
@@ -49,8 +70,6 @@ public class InputManager : MonoBehaviour
             playerInput.Player.Enable();
             playerInput.UI.Disable();
         }
-
     }
-
 
 }

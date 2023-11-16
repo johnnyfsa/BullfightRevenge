@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine.UIElements;
 using UnityEngine;
 using System;
+using System.Threading;
 
 public class UIOnPlayManager : MonoBehaviour
 {
     [SerializeField] Player player;
-    [SerializeField] InputManager inputManager;
     [SerializeField] Texture2D velocityPowerUpIcon;
     [SerializeField] Texture2D stompPowerUpIcon;
     private Label numLives;
@@ -50,6 +50,7 @@ public class UIOnPlayManager : MonoBehaviour
 
     private void OnEnable()
     {
+        GameManager.Instance.OnScoreChange += UpdateScore;
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         score = root.Q<Label>("Score");
         numLives = root.Q<Label>("NumLives");

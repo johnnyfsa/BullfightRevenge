@@ -2,13 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public event Action<int> OnScoreChange;
+    public event Action OnChangeGameState;
     enum DiffcultyLevel { Easy, Medium, Hard };
     private static GameManager _instance;
-    [SerializeField] InputManager inputManager;
-    [SerializeField] UIManager uIManager;
     [SerializeField] int score;
     [SerializeField] DiffcultyLevel difficulty;
     [SerializeField] bool isPaused;
@@ -34,8 +35,13 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        inputManager.OnPauseButtonPressed += PauseButtonReaction;
+
+    }
+
+    void Start()
+    {
         difficulty = DiffcultyLevel.Easy;
+        InputManager.Instance.OnPauseButtonPressed += PauseButtonReaction;
     }
 
     private void PauseButtonReaction(object sender, EventArgs e)
@@ -45,14 +51,23 @@ public class GameManager : MonoBehaviour
 
     public void ChangeGameState()
     {
-        uIManager.ChangePauseState();
         if (isPaused)
         {
             ResumeGame();
+            OnChangeGameState?.Invoke();
         }
         else
         {
             PauseGame();
+            OnChangeGameState?.Invoke();
+        }
+        try
+        {
+            InputManager.Instance.SwitchActiveActionMap();
+        }
+        catch (NullReferenceException)
+        {
+            print("algo de errado não está certo");
         }
     }
 
@@ -60,22 +75,19 @@ public class GameManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0;
-        inputManager.SwitchActiveActionMap();
     }
 
     private void ResumeGame()
     {
         isPaused = false;
         Time.timeScale = 1;
-        inputManager.SwitchActiveActionMap();
     }
 
     public void ChangeScore(int amount)
     {
         Score += amount;
-        UIOnPlayManager uiOnPlay = uIManager.GetActiveUI(UIType.HUD);
-        uiOnPlay.UpdateScore(Score);
         CheckScoreThreshold();
+        OnScoreChange?.Invoke(Score);
     }
 
     private void CheckScoreThreshold()
@@ -124,13 +136,19 @@ public class GameManager : MonoBehaviour
             Debug.Log("Executando como Aplicativo");
         }
     }
+    public void RestartGame()
+    {
+        ChangeGameState();
+        Score = 0;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 
     public void GameOver()
     {
         isGameOver = true;
         //UIManager.GameOver();
         spawnManager.gameObject.SetActive(false);
-        inputManager.OnPauseButtonPressed -= PauseButtonReaction;
+        InputManager.Instance.OnPauseButtonPressed -= PauseButtonReaction;
         //Destroy(this.gameObject); 
     }
 }

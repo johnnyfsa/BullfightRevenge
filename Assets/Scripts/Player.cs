@@ -18,7 +18,6 @@ public class Player : MonoBehaviour
     }
     public event EventHandler OnLivesChanged;
     public event EventHandler<PowerUpArgs> OnPowerUpChanged;
-    [SerializeField] InputManager inputManager;
     [SerializeField] float speed = 5f;
     [SerializeField] float rotationSpeed = 5f;
     [SerializeField] int numLives;
@@ -43,7 +42,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        inputManager.OnActionButtonPressed += HandleActionButtonPressed;
+        InputManager.Instance.OnActionButtonPressed += HandleActionButtonPressed;
     }
 
     private void HandleActionButtonPressed(object sender, EventArgs e)
@@ -121,7 +120,7 @@ public class Player : MonoBehaviour
 
     private void HandleMovement()
     {
-        Vector2 inputVector = inputManager.GetMovementVectorNormalized();
+        Vector2 inputVector = InputManager.Instance.GetMovementVectorNormalized();
         Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
         float moveDistance = Time.deltaTime * Speed * SpeedMultiplyer;
         isMoving = moveDir != Vector3.zero;
