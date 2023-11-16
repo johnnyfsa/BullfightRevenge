@@ -8,6 +8,10 @@ public class PauseMenuController : MonoBehaviour
 {
     private VisualElement root;
     private List<Button> buttons;
+    private VisualElement optionsScreen;
+
+    private Button resumeBtn, optionsBtn, restartBtn, quitBtn;
+
 
     private int index;
 
@@ -19,8 +23,38 @@ public class PauseMenuController : MonoBehaviour
         resume.Focus();
         index = 0;
         buttons = root.Query<Button>().ToList();
+        resumeBtn = root.Q<Button>("resume");
+        optionsBtn = root.Q<Button>("options");
+        restartBtn = root.Q<Button>("restart");
+        quitBtn = root.Q<Button>("quit");
+        optionsScreen = root.Q<VisualElement>("Options");
+        optionsScreen.style.display = DisplayStyle.None;
         root.RegisterCallback<KeyDownEvent>(OnNavigateUI, TrickleDown.TrickleDown);
         root.RegisterCallback<KeyDownEvent>(ConfirmAction, TrickleDown.TrickleDown);
+        resumeBtn.RegisterCallback<ClickEvent>(OnResumeButonClicked);
+        optionsBtn.RegisterCallback<ClickEvent>(OnOptionsButonClicked);
+        restartBtn.RegisterCallback<ClickEvent>(OnRestartButonClicked);
+        quitBtn.RegisterCallback<ClickEvent>(OnQuitButonClicked);
+    }
+
+    private void OnQuitButonClicked(ClickEvent evt)
+    {
+        GameManager.Instance.QuitGame();
+    }
+
+    private void OnRestartButonClicked(ClickEvent evt)
+    {
+        GameManager.Instance.RestartGame();
+    }
+
+    private void OnOptionsButonClicked(ClickEvent evt)
+    {
+        optionsScreen.style.display = DisplayStyle.Flex;
+    }
+
+    private void OnResumeButonClicked(ClickEvent evt)
+    {
+        GameManager.Instance.ChangeGameState();
     }
 
     private void ConfirmAction(KeyDownEvent evt)
@@ -38,6 +72,9 @@ public class PauseMenuController : MonoBehaviour
                     break;
                 case "restart":
                     GameManager.Instance.RestartGame();
+                    break;
+                case "options":
+                    optionsScreen.style.display = DisplayStyle.Flex;
                     break;
             }
         }
