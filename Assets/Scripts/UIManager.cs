@@ -14,11 +14,20 @@ public class UIManager : MonoBehaviour
         UIUnit pauseMenu = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
         PauseMenuController pauseMenuController = pauseMenu.uiDocument.GetComponent<PauseMenuController>();
         pauseMenuController.OnOpenOptions += OpenOptions;
+        UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
+        OptionMenuController optionMenuController = optionsScreen.uiDocument.GetComponent<OptionMenuController>();
+        optionMenuController.OnCloseOptions += CloseOptions;
     }
 
     private void OnDisable()
     {
         GameManager.Instance.OnChangeGameState -= TogglePauseState;
+        UIUnit pauseMenu = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
+        PauseMenuController pauseMenuController = pauseMenu.uiDocument.GetComponent<PauseMenuController>();
+        pauseMenuController.OnOpenOptions -= OpenOptions;
+        UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
+        OptionMenuController optionMenuController = optionsScreen.uiDocument.GetComponent<OptionMenuController>();
+        optionMenuController.OnCloseOptions -= CloseOptions;
     }
 
     public void TogglePauseState()
