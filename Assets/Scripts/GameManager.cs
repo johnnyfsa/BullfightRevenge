@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     private void PauseGame()
     {
         isPaused = true;

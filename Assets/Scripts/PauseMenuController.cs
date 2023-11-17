@@ -6,9 +6,9 @@ using UnityEngine.UIElements;
 
 public class PauseMenuController : MonoBehaviour
 {
+    public event Action OnOpenOptions;
     private VisualElement root;
     private List<Button> buttons;
-    private VisualElement optionsScreen;
 
     private Button resumeBtn, optionsBtn, restartBtn, quitBtn;
 
@@ -27,8 +27,6 @@ public class PauseMenuController : MonoBehaviour
         optionsBtn = root.Q<Button>("options");
         restartBtn = root.Q<Button>("restart");
         quitBtn = root.Q<Button>("quit");
-        optionsScreen = root.Q<VisualElement>("Options");
-        optionsScreen.style.display = DisplayStyle.None;
         root.RegisterCallback<KeyDownEvent>(OnNavigateUI, TrickleDown.TrickleDown);
         root.RegisterCallback<KeyDownEvent>(ConfirmAction, TrickleDown.TrickleDown);
         resumeBtn.RegisterCallback<ClickEvent>(OnResumeButonClicked);
@@ -49,7 +47,12 @@ public class PauseMenuController : MonoBehaviour
 
     private void OnOptionsButonClicked(ClickEvent evt)
     {
-        optionsScreen.style.display = DisplayStyle.Flex;
+        OpenOptions();
+    }
+
+    private void OpenOptions()
+    {
+        OnOpenOptions?.Invoke();
     }
 
     private void OnResumeButonClicked(ClickEvent evt)
@@ -57,7 +60,7 @@ public class PauseMenuController : MonoBehaviour
         GameManager.Instance.ChangeGameState();
     }
 
-    private void ConfirmAction(KeyDownEvent evt)
+    protected void ConfirmAction(KeyDownEvent evt)
     {
         if (evt.keyCode == KeyCode.Space || evt.keyCode == KeyCode.Return)
         {
@@ -74,13 +77,13 @@ public class PauseMenuController : MonoBehaviour
                     GameManager.Instance.RestartGame();
                     break;
                 case "options":
-                    optionsScreen.style.display = DisplayStyle.Flex;
+                    OpenOptions();
                     break;
             }
         }
     }
 
-    private void OnNavigateUI(KeyDownEvent evt)
+    protected void OnNavigateUI(KeyDownEvent evt)
     {
         KeyCode keyPressed = evt.keyCode;
         switch (keyPressed)
@@ -116,4 +119,5 @@ public class PauseMenuController : MonoBehaviour
         }
         buttons[index].Focus();
     }
+
 }

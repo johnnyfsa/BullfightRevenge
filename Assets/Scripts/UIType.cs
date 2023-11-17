@@ -6,6 +6,7 @@ public enum UIType
 {
     HUD,
     PauseMenu,
+    Options,
     GameOver,
     GameStart,
     HighScores
