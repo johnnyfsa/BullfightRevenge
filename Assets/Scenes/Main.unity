@@ -1362,6 +1362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 753311887}
   - component: {fileID: 753311888}
+  - component: {fileID: 753311889}
   m_Layer: 0
   m_Name: GameOverUIDocument
   m_TagString: Untagged
@@ -1400,6 +1401,18 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 23be1303c1923bd488e3a998455d14cb, type: 3}
   m_SortingOrder: 1
+--- !u!114 &753311889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753311886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0196c39178f3aab4dbedae45519b1383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &761620281
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -171,13 +171,13 @@ public class Player : MonoBehaviour
     public void AddLives(int livesToAdd)
     {
         NumLives += livesToAdd;
-        if (NumLives >= 0)
+        if (NumLives > 0)
         {
             OnLivesChanged?.Invoke(this, EventArgs.Empty);
         }
         else if (NumLives <= 0)
         {
-            // GameManager.Instance.GameOver();
+            GameManager.Instance.GameOver();
         }
     }
 

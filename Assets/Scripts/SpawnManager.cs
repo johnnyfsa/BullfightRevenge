@@ -47,6 +47,8 @@ public class SpawnManager : MonoBehaviour
         _enemyPool.Dispose();
         _powerUpPool.Dispose();
         _explosionPool.Dispose();
+        GameManager.Instance.OnGameOver -= StopSpawning;
+        GameManager.Instance.OnDifficultyChange -= ChangeEnemySpawnTimer;
     }
 
     private void OnTakeExplosionFromPool(FXController controller)

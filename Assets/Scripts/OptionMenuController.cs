@@ -37,6 +37,7 @@ public class OptionMenuController : MonoBehaviour
     private int index;
 
     private List<SelectableElement> selectableElements;
+    Slider musicSlider, sfxSlider;
 
     void OnEnable()
     {
@@ -44,6 +45,8 @@ public class OptionMenuController : MonoBehaviour
         selectableElements = new List<SelectableElement>();
         root = GetComponent<UIDocument>().rootVisualElement;
         VisualElement optionBox = root.Q<VisualElement>("OptionBox");
+        musicSlider = optionBox.Q<Slider>("musicSlider");
+        sfxSlider = optionBox.Q<Slider>("sfxSlider");
         List<Slider> sliders = new List<Slider>();
         sliders = optionBox.Query<Slider>().ToList();
         foreach (Slider slider in sliders)
@@ -55,10 +58,26 @@ public class OptionMenuController : MonoBehaviour
             selectableElements.Add(new SelectableElement(button));
         }
 
+        sfxSlider.value = AudioManager.Instance.GetSFXVolume() * 100;
+        musicSlider.value = AudioManager.Instance.GetMusicVolume() * 100;
         selectableElements[index].Focus();
 
         root.RegisterCallback<KeyDownEvent>(OnNavigateUI, TrickleDown.TrickleDown);
         root.RegisterCallback<KeyDownEvent>(ConfirmAction, TrickleDown.TrickleDown);
+        musicSlider.RegisterCallback<ChangeEvent<float>>(OnMusicSliderChange);
+        sfxSlider.RegisterCallback<ChangeEvent<float>>(OnSFXSliderChange);
+    }
+
+    private void OnSFXSliderChange(ChangeEvent<float> evt)
+    {
+        float value = evt.newValue / 100;
+        AudioManager.Instance.SetSFXVolume(value);
+    }
+
+    private void OnMusicSliderChange(ChangeEvent<float> evt)
+    {
+        float value = evt.newValue / 100;
+        AudioManager.Instance.SetMusicVolume(value);
     }
 
     protected void ConfirmAction(KeyDownEvent evt)

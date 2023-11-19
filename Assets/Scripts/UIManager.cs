@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
         UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
         OptionMenuController optionMenuController = optionsScreen.uiDocument.GetComponent<OptionMenuController>();
         optionMenuController.OnCloseOptions += CloseOptions;
+        GameManager.Instance.OnGameOver += GameOver;
     }
 
     private void OnDisable()
@@ -28,18 +29,23 @@ public class UIManager : MonoBehaviour
         UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
         OptionMenuController optionMenuController = optionsScreen.uiDocument.GetComponent<OptionMenuController>();
         optionMenuController.OnCloseOptions -= CloseOptions;
+        GameManager.Instance.OnGameOver -= GameOver;
     }
 
     public void TogglePauseState()
     {
-        UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
-        if (optionsScreen.uiDocument.gameObject.activeInHierarchy)
+        if (!GameManager.Instance.IsGameOver)
         {
-            CloseOptions();
+            UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
+            if (optionsScreen.uiDocument.gameObject.activeInHierarchy)
+            {
+                CloseOptions();
+            }
+            UIUnit pauseScreen = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
+            bool activeState = pauseScreen.uiDocument.gameObject.activeInHierarchy;
+            pauseScreen.uiDocument.gameObject.SetActive(!activeState);
         }
-        UIUnit pauseScreen = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
-        bool activeState = pauseScreen.uiDocument.gameObject.activeInHierarchy;
-        pauseScreen.uiDocument.gameObject.SetActive(!activeState);
+
     }
 
 
@@ -68,6 +74,12 @@ public class UIManager : MonoBehaviour
             return uiManager;
         }
         return null;
+    }
+
+    public void GameOver()
+    {
+        UIUnit gameOverScreen = Array.Find(Screens, screen => screen.type == UIType.GameOver);
+        gameOverScreen.uiDocument.gameObject.SetActive(true);
     }
 
 }

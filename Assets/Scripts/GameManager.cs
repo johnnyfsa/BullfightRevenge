@@ -140,6 +140,12 @@ public class GameManager : MonoBehaviour
     }
     public void RestartGame()
     {
+        if (isGameOver)
+        {
+            isGameOver = false;
+            InputManager.Instance.OnPauseButtonPressed += PauseButtonReaction;
+        }
+
         ChangeGameState();
         Score = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -148,9 +154,8 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         isGameOver = true;
-        //UIManager.GameOver();
+        ChangeGameState();
         OnGameOver?.Invoke();
         InputManager.Instance.OnPauseButtonPressed -= PauseButtonReaction;
-        //Destroy(this.gameObject); 
     }
 }
