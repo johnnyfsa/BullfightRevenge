@@ -45,6 +45,11 @@ public class Player : MonoBehaviour
         InputManager.Instance.OnActionButtonPressed += HandleActionButtonPressed;
     }
 
+
+    void OnDestroy()
+    {
+        InputManager.Instance.OnActionButtonPressed -= HandleActionButtonPressed;
+    }
     private void HandleActionButtonPressed(object sender, EventArgs e)
     {
         if (stompActive)
