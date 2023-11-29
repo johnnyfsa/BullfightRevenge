@@ -1,0 +1,24 @@
+.titleStart {
+    flex-grow: 1;
+    background-image: url('project://database/Assets/Textures/bullfight_open.png?fileID=2800000&guid=2b334b95f9e321c469fb1da4f651022f&type=3#bullfight_open');
+    width: 100%;
+    height: 100%;
+}
+
+.titleEnd {
+    width: 29%;
+    height: 33%;
+    flex-grow: 0;
+    transition-timing-function: ease;
+}
+
+.btnContainer--bot {
+    flex-grow: 1;
+    display: flex;
+    visibility: visible;
+    translate: 0 100%;
+}
+
+.btnContainer--top {
+    translate: 0 0;
+}

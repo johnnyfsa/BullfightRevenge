@@ -1,0 +1,45 @@
+.nameLabel {
+    flex-shrink: 1;
+    flex-grow: 0;
+    width: auto;
+    border-left-color: rgb(140, 57, 57);
+    border-right-color: rgb(140, 57, 57);
+    border-top-color: rgb(140, 57, 57);
+    border-bottom-color: rgb(140, 57, 57);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    background-color: rgb(200, 200, 200);
+    border-top-left-radius: 30px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 30px;
+    justify-content: flex-start;
+    align-items: auto;
+    -unity-text-align: middle-center;
+    font-size: 31px;
+}
+
+.scoreLabel {
+    flex-shrink: 1;
+    flex-grow: 0;
+    width: auto;
+    border-left-color: rgb(140, 57, 57);
+    border-right-color: rgb(140, 57, 57);
+    border-top-color: rgb(140, 57, 57);
+    border-bottom-color: rgb(140, 57, 57);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    background-color: rgb(200, 200, 200);
+    border-top-left-radius: 0;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-bottom-left-radius: 0;
+    justify-content: flex-start;
+    align-items: auto;
+    -unity-text-align: middle-center;
+    font-size: 31px;
+}

@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/UGUI/coverStyle.uss?fileID=7433441132597879392&amp;guid=a6ba2d43bdc90094fb6151a53baf90d3&amp;type=3#coverStyle" />
+    <Style src="project://database/Assets/UI%20Toolkit/UGUI/PauseMenuUss.uss?fileID=7433441132597879392&amp;guid=cfd10ab4c2718be4e93515f0a20fb86e&amp;type=3#PauseMenuUss" />
+    <ui:VisualElement name="Container" style="flex-grow: 1; width: 100%; height: 100%; align-items: center; justify-content: flex-start; background-color: rgba(0, 0, 0, 0); padding-top: 12px; padding-right: 12px; padding-bottom: 12px; padding-left: 12px;">
+        <ui:VisualElement name="title" class="titleStart" style="transition-timing-function: ease-in; transition-delay: 1s; transition-duration: 0.25s; -unity-background-image-tint-color: rgb(238, 238, 238); -unity-background-scale-mode: scale-to-fit; background-image: url(&apos;project://database/Assets/Textures/bullfight_open.png?fileID=2800000&amp;guid=2b334b95f9e321c469fb1da4f651022f&amp;type=3#bullfight_open&apos;); background-color: rgba(0, 0, 0, 0); padding-top: 16px; padding-right: 16px; padding-bottom: 16px; padding-left: 16px;" />
+        <ui:VisualElement name="btnContainer" class="btnContainer--bot" style="transition-duration: 0.25s; transition-delay: 1s; position: absolute; bottom: 0; width: 20%; height: 66%; align-self: auto; align-items: center;">
+            <ui:Button text="Start" parse-escape-sequences="true" display-tooltip-when-elided="true" name="startBtn" class="PauseMenuButton" style="margin-top: 28px;" />
+            <ui:Button text="High Scores" parse-escape-sequences="true" display-tooltip-when-elided="true" name="highScoresBtn" class="PauseMenuButton" />
+            <ui:Button text="Options" parse-escape-sequences="true" display-tooltip-when-elided="true" name="optionsBtn" class="PauseMenuButton" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

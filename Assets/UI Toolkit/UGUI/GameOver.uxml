@@ -3,5 +3,7 @@
     <ui:VisualElement name="main" style="flex-grow: 1; width: 100%; height: 100%; align-items: center; background-color: rgba(0, 0, 0, 0.55); justify-content: center;">
         <ui:Label tabindex="-1" text="Game Over" parse-escape-sequences="true" display-tooltip-when-elided="true" name="gameOverLabel" style="font-size: 87px; color: rgb(255, 255, 255);" />
         <ui:Button text="Restart" parse-escape-sequences="true" display-tooltip-when-elided="true" name="restartBtn" class="PauseMenuButton" />
+        <ui:Button text="High Scores" parse-escape-sequences="true" display-tooltip-when-elided="true" name="highScores" class="PauseMenuButton" />
+        <ui:Button text="Quit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="quitBtn" class="PauseMenuButton" />
     </ui:VisualElement>
 </ui:UXML>
