@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class StartMenuController : MonoBehaviour
 {
+    public event Action OnHighScoreSelected;
     VisualElement root, title, btnContainer;
     List<Button> buttons;
 
@@ -22,10 +23,12 @@ public class StartMenuController : MonoBehaviour
         buttons = btnContainer.Query<Button>().ToList();
         buttons[index].Focus();
         startBtn = buttons[0];
-        optionsBtn = buttons[1];
-        hscoresButton = buttons[2];
+        hscoresButton = buttons[1];
+        optionsBtn = buttons[2];
 
         root.RegisterCallback<KeyDownEvent>(StartGame);
+        startBtn.RegisterCallback<ClickEvent>(evt => { SceneManager.LoadScene("Main"); });
+        hscoresButton.RegisterCallback<ClickEvent>(evt => { OnHighScoreSelected?.Invoke(); });
         StartCoroutine(ShowMenu());
     }
 
@@ -39,7 +42,8 @@ public class StartMenuController : MonoBehaviour
                 case "startBtn":
                     SceneManager.LoadScene("Main");
                     break;
-                case "highScoreBtn":
+                case "highScoresBtn":
+                    OnHighScoreSelected?.Invoke();
                     break;
                 case "optionsBtn":
                     break;

@@ -18,7 +18,7 @@
     justify-content: flex-start;
     align-items: auto;
     -unity-text-align: middle-center;
-    font-size: 31px;
+    font-size: 21px;
 }
 
 .scoreLabel {
@@ -41,5 +41,5 @@
     justify-content: flex-start;
     align-items: auto;
     -unity-text-align: middle-center;
-    font-size: 31px;
+    font-size: 21px;
 }

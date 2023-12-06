@@ -2128,6 +2128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bull: {fileID: 942969457}
   coverScreen: {fileID: 1004776863}
+  highScoresScreen: {fileID: 173739110}
 --- !u!4 &1506035454 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3678523598821066665, guid: 8aa557e54c6196e4895a56af24dc7f6b, type: 3}
