@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class PauseMenuController : MonoBehaviour
@@ -71,7 +72,7 @@ public class PauseMenuController : MonoBehaviour
                     GameManager.Instance.ChangeGameState();
                     break;
                 case "quit":
-                    GameManager.Instance.QuitGame();
+                    GameManager.Instance.ReturnToTitle();
                     break;
                 case "restart":
                     GameManager.Instance.RestartGame();

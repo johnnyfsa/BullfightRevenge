@@ -191,6 +191,12 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    public void ReturnToTitle()
+    {
+        ChangeGameState();
+        SceneManager.LoadScene("Cover");
+    }
+
     public void SaveTopScore(string playerName)
     {
         topScores.Add(new PlayerData(playerName, score));
