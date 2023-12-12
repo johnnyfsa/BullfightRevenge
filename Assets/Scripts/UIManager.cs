@@ -2,48 +2,91 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] UIUnit[] Screens;
+    private UIUnit pauseMenu, optionsScreen, addNewHighScoreScreen, highScoresScreen, gameOverScreen;
     // private static UIManager instance;
     //public static UIManager Instance { get => instance; set => instance = value; }
     private void OnEnable()
     {
         GameManager.Instance.OnChangeGameState += TogglePauseState;
-        UIUnit pauseMenu = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
+        GameManager.Instance.OnTopScoreChange += ShowAddNewHighScore;
+        pauseMenu = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
         PauseMenuController pauseMenuController = pauseMenu.uiDocument.GetComponent<PauseMenuController>();
         pauseMenuController.OnOpenOptions += OpenOptions;
-        UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
+        optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
         OptionMenuController optionMenuController = optionsScreen.uiDocument.GetComponent<OptionMenuController>();
         optionMenuController.OnCloseOptions += CloseOptions;
         GameManager.Instance.OnGameOver += GameOver;
+        gameOverScreen = Array.Find(Screens, screen => screen.type == UIType.GameOver);
+        GameOverScreenController gameOverController = gameOverScreen.uiDocument.GetComponent<GameOverScreenController>();
+        gameOverController.OnHighScoreSelected += ShowHighScoreScreen;
+        addNewHighScoreScreen = Array.Find(Screens, screen => screen.type == UIType.AddHighScore);
+        AddNewHighScore addNewHighScoreScreenController = addNewHighScoreScreen.uiDocument.GetComponent<AddNewHighScore>();
+        addNewHighScoreScreenController.OnNewHighScoreSubmit += CloseAddNewHighScores;
+        highScoresScreen = Array.Find(Screens, screen => screen.type == UIType.HighScores);
+        HighScoreUIController hscoreScreenController = highScoresScreen.uiDocument.GetComponent<HighScoreUIController>();
+        hscoreScreenController.OnScreenClosed += CloseHighScores;
     }
 
     private void OnDisable()
     {
         GameManager.Instance.OnChangeGameState -= TogglePauseState;
-        UIUnit pauseMenu = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
+        GameManager.Instance.OnTopScoreChange -= ShowAddNewHighScore;
         PauseMenuController pauseMenuController = pauseMenu.uiDocument.GetComponent<PauseMenuController>();
         pauseMenuController.OnOpenOptions -= OpenOptions;
-        UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
         OptionMenuController optionMenuController = optionsScreen.uiDocument.GetComponent<OptionMenuController>();
         optionMenuController.OnCloseOptions -= CloseOptions;
+        AddNewHighScore addNewHighScoreScreenController = addNewHighScoreScreen.uiDocument.GetComponent<AddNewHighScore>();
+        addNewHighScoreScreenController.OnNewHighScoreSubmit -= CloseAddNewHighScores;
         GameManager.Instance.OnGameOver -= GameOver;
+        GameOverScreenController gameOverController = gameOverScreen.uiDocument.GetComponent<GameOverScreenController>();
+        gameOverController.OnHighScoreSelected -= ShowHighScoreScreen;
+        HighScoreUIController hscoreScreenController = highScoresScreen.uiDocument.GetComponent<HighScoreUIController>();
+        hscoreScreenController.OnScreenClosed -= CloseHighScores;
+
+    }
+
+    private void CloseHighScores()
+    {
+        if (gameOverScreen.uiDocument.gameObject.activeInHierarchy == false)
+        {
+            gameOverScreen.uiDocument.gameObject.SetActive(true);
+        }
+        highScoresScreen.uiDocument.gameObject.SetActive(false);
+    }
+
+    private void ShowHighScoreScreen()
+    {
+        if (gameOverScreen.uiDocument.gameObject.activeInHierarchy == true)
+        {
+            gameOverScreen.uiDocument.gameObject.SetActive(false);
+        }
+        highScoresScreen.uiDocument.gameObject.SetActive(true);
+    }
+
+    private void CloseAddNewHighScores()
+    {
+        if (gameOverScreen.uiDocument.gameObject.activeInHierarchy == false)
+        {
+            gameOverScreen.uiDocument.gameObject.SetActive(true);
+        }
+        addNewHighScoreScreen.uiDocument.gameObject.SetActive(false);
     }
 
     public void TogglePauseState()
     {
         if (!GameManager.Instance.IsGameOver)
         {
-            UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
             if (optionsScreen.uiDocument.gameObject.activeInHierarchy)
             {
                 CloseOptions();
             }
-            UIUnit pauseScreen = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
-            bool activeState = pauseScreen.uiDocument.gameObject.activeInHierarchy;
-            pauseScreen.uiDocument.gameObject.SetActive(!activeState);
+            bool activeState = pauseMenu.uiDocument.gameObject.activeInHierarchy;
+            pauseMenu.uiDocument.gameObject.SetActive(!activeState);
         }
 
     }
@@ -51,18 +94,15 @@ public class UIManager : MonoBehaviour
 
     public void OpenOptions()
     {
-        UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
-        UIUnit pauseScreen = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
-        pauseScreen.uiDocument.gameObject.SetActive(false);
+
+        pauseMenu.uiDocument.gameObject.SetActive(false);
         optionsScreen.uiDocument.gameObject.SetActive(true);
     }
 
 
     public void CloseOptions()
     {
-        UIUnit optionsScreen = Array.Find(Screens, screen => screen.type == UIType.Options);
-        UIUnit pauseScreen = Array.Find(Screens, screen => screen.type == UIType.PauseMenu);
-        pauseScreen.uiDocument.gameObject.SetActive(true);
+        pauseMenu.uiDocument.gameObject.SetActive(true);
         optionsScreen.uiDocument.gameObject.SetActive(false);
     }
     public UIOnPlayManager GetActiveUI(UIType type)
@@ -78,8 +118,16 @@ public class UIManager : MonoBehaviour
 
     public void GameOver()
     {
-        UIUnit gameOverScreen = Array.Find(Screens, screen => screen.type == UIType.GameOver);
         gameOverScreen.uiDocument.gameObject.SetActive(true);
+    }
+
+    public void ShowAddNewHighScore()
+    {
+        if (gameOverScreen.uiDocument.gameObject.activeInHierarchy == true)
+        {
+            gameOverScreen.uiDocument.gameObject.SetActive(false);
+        }
+        addNewHighScoreScreen.uiDocument.gameObject.SetActive(true);
     }
 
 }

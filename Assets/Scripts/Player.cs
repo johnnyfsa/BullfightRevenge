@@ -1,19 +1,20 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private const int MAX_LIVES = 5;
+    private const int MAX_STOMP_POWERUP_COUNT = 3;
     //I want to create a new event handler to send the information of which powerup is active
     public class PowerUpArgs : EventArgs
     {
         public float _speedMultiplier;
-        public bool _isStompActive;
-        public PowerUpArgs(float speedMultiplyer, bool isStompActive)
+        public int _numStomps;
+        public PowerUpArgs(float speedMultiplyer, int numStomps)
         {
             _speedMultiplier = speedMultiplyer;
-            _isStompActive = isStompActive;
+            _numStomps = numStomps;
         }
     }
     public event EventHandler OnLivesChanged;
@@ -25,7 +26,7 @@ public class Player : MonoBehaviour
     [SerializeField] float speedMultiplyer = 1f;
     [SerializeField] float powerUpDuration = 5f;
 
-    [SerializeField] bool stompActive = false;
+    [SerializeField] int numStomps = 0;
     private ParticleSystem stompShockWave;
     private ParticleSystem riseSmoke;
 
@@ -38,7 +39,7 @@ public class Player : MonoBehaviour
     public int NumLives { get => numLives; set => numLives = value; }
     public float Speed { get => speed; set => speed = value; }
     public float SpeedMultiplyer { get => speedMultiplyer; set => speedMultiplyer = value; }
-    public bool StompActive { get => stompActive; set => stompActive = value; }
+    public int NumStomps { get => numStomps; set => numStomps = value; }
 
     private void Awake()
     {
@@ -52,7 +53,7 @@ public class Player : MonoBehaviour
     }
     private void HandleActionButtonPressed(object sender, EventArgs e)
     {
-        if (stompActive)
+        if (numStomps > 0)
         {
             if (GameManager.Instance.Score % 3 == 0)
             {
@@ -61,8 +62,8 @@ public class Player : MonoBehaviour
             stompShockWave.Play();
             StartCoroutine(ConludeStomping());
             CheckForEnemiesInArea();
-            stompActive = false;
-            OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, stompActive));
+            numStomps--;
+            OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, numStomps));
         }
     }
 
@@ -103,7 +104,7 @@ public class Player : MonoBehaviour
                 if (speedMultiplyer <= 1.5f)
                 {
                     riseSmoke.Play();
-                    OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, stompActive));
+                    OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, numStomps));
                 }
                 StartCoroutine(FadeSpeed());
                 spdpowerup.DestroySelf();
@@ -113,7 +114,7 @@ public class Player : MonoBehaviour
                 AudioManager.Instance.PlaySFX(SoundType.PowerUpPickup);
                 powerup.Activate(this);
                 powerup.DestroySelf();
-                OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, stompActive));
+                OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, numStomps));
             }
         }
 
@@ -175,6 +176,7 @@ public class Player : MonoBehaviour
 
     public void AddLives(int livesToAdd)
     {
+        if (NumLives + livesToAdd > MAX_LIVES) { return; }
         NumLives += livesToAdd;
         if (NumLives > 0)
         {
@@ -193,7 +195,7 @@ public class Player : MonoBehaviour
         if (speedMultiplyer == 1.0f)
         {
             riseSmoke.Stop();
-            OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, stompActive));
+            OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, numStomps));
         }
     }
 
@@ -214,5 +216,12 @@ public class Player : MonoBehaviour
                 enemy.Explode();
             }
         }
+    }
+
+
+    public void AddStomps(int stompsToAdd)
+    {
+        if (NumStomps + stompsToAdd > MAX_STOMP_POWERUP_COUNT) { return; }
+        NumStomps += stompsToAdd;
     }
 }

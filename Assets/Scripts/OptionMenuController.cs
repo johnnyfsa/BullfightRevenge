@@ -38,6 +38,7 @@ public class OptionMenuController : MonoBehaviour
 
     private List<SelectableElement> selectableElements;
     Slider musicSlider, sfxSlider;
+    Button exitBtn;
 
     void OnEnable()
     {
@@ -47,6 +48,7 @@ public class OptionMenuController : MonoBehaviour
         VisualElement optionBox = root.Q<VisualElement>("OptionBox");
         musicSlider = optionBox.Q<Slider>("musicSlider");
         sfxSlider = optionBox.Q<Slider>("sfxSlider");
+        exitBtn = optionBox.Q<Button>("exitBtn");
         List<Slider> sliders = new List<Slider>();
         sliders = optionBox.Query<Slider>().ToList();
         foreach (Slider slider in sliders)
@@ -66,6 +68,12 @@ public class OptionMenuController : MonoBehaviour
         root.RegisterCallback<KeyDownEvent>(ConfirmAction, TrickleDown.TrickleDown);
         musicSlider.RegisterCallback<ChangeEvent<float>>(OnMusicSliderChange);
         sfxSlider.RegisterCallback<ChangeEvent<float>>(OnSFXSliderChange);
+        exitBtn.RegisterCallback<ClickEvent>(ClickToClose);
+    }
+
+    private void ClickToClose(ClickEvent evt)
+    {
+        OnCloseOptions?.Invoke();
     }
 
     private void OnSFXSliderChange(ChangeEvent<float> evt)

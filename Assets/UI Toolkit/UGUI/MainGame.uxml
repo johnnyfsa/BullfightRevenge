@@ -2,12 +2,43 @@
     <Style src="project://database/Assets/UI%20Toolkit/UGUI/menuStyle.uss?fileID=7433441132597879392&amp;guid=f4ee9e7a1b22d5641a9f0e0b25365371&amp;type=3#menuStyle" />
     <ui:VisualElement name="HUD" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); width: 100%; height: 100%;">
         <ui:VisualElement name="Header" style="flex-grow: 1; width: 100%; height: 20%; flex-direction: row; align-items: flex-start; justify-content: space-between;">
-            <ui:Label tabindex="-1" text="Num Lives:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumLives" class="label" style="font-size: 30px;" />
-            <ui:Label tabindex="-1" text="Score:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Score" class="label" />
+            <ui:VisualElement name="NumLivesPanel" class="GamePanel" style="flex-direction: row; width: 30%; height: 68%; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 10px; align-items: center;">
+                <ui:Label tabindex="-1" text="Lives:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="NumLives" class="label game-label" style="flex-shrink: 0; left: auto; font-size: 23px; justify-content: flex-start; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 7px; margin-bottom: 0; margin-left: 7px; height: 29px;" />
+                <ui:VisualElement name="LifeContainer" style="flex-grow: 1; height: 100%; width: 15%;">
+                    <ui:VisualElement name="BullHead" class="life-icon" style="width: 100%; -unity-background-image-tint-color: rgb(87, 67, 45);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="LifeContainer" style="flex-grow: 1; height: 100%; width: 15%;">
+                    <ui:VisualElement name="BullHead" class="life-icon" style="width: 100%; -unity-background-image-tint-color: rgb(87, 67, 45);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="LifeContainer" style="flex-grow: 1; height: 100%; width: 15%;">
+                    <ui:VisualElement name="BullHead" class="life-icon" style="width: 100%; -unity-background-image-tint-color: rgb(87, 67, 45);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="LifeContainer" style="flex-grow: 1; height: 100%; width: 15%;">
+                    <ui:VisualElement name="BullHead" class="life-icon" style="width: 100%; -unity-background-image-tint-color: rgb(87, 67, 45);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="LifeContainer" style="flex-grow: 1; height: 100%; width: 15%;">
+                    <ui:VisualElement name="BullHead" class="life-icon" style="width: 100%; -unity-background-image-tint-color: rgb(87, 67, 45);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="ScorePanel" class="GamePanel" style="flex-grow: 0;">
+                <ui:Label tabindex="-1" text="Score:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Score" class="label game-label" style="height: 68%;" />
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="Footer" style="flex-grow: 1; width: 100%; height: 100%; flex-direction: row; justify-content: space-between; align-self: auto; align-items: flex-end;">
-            <ui:VisualElement name="VelocityPowerUpIcon" style="flex-grow: initial; background-color: rgba(219, 28, 28, 0); width: 10%; height: 25%; background-image: url(&apos;project://database/Assets/Textures/Speed%20Icon.png?fileID=2800000&amp;guid=4eb8a12c4739b6d45a019bab1cbff792&amp;type=3#Speed Icon&apos;);" />
-            <ui:VisualElement name="StompPowerUpIcon" style="flex-grow: initial; background-color: rgba(14, 60, 229, 0); width: 10%; height: 25%; background-image: url(&apos;project://database/Assets/Textures/Speed%20Icon.png?fileID=2800000&amp;guid=4eb8a12c4739b6d45a019bab1cbff792&amp;type=3#Speed Icon&apos;);" />
+            <ui:VisualElement name="VelocityPowerupContainer" class="GamePanel" style="flex-grow: 0; width: 10%; height: 15%; padding-top: 0.5%; padding-right: 1%; padding-bottom: 0; padding-left: 1%; align-items: auto; justify-content: center;">
+                <ui:VisualElement name="VelocityPowerUpIcon" style="flex-grow: initial; background-color: rgba(219, 28, 28, 0); width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Textures/bull-speed-icon.png?fileID=2800000&amp;guid=bb22329bdfe9a6a4590e56ea89f2c605&amp;type=3#bull-speed-icon&apos;); align-items: stretch; -unity-background-image-tint-color: rgb(87, 67, 45); justify-content: flex-start; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; bottom: -11%;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="StompPowerupContainer" class="GamePanel" style="flex-grow: 0; width: 20%; height: 15%; align-self: auto; align-items: center; flex-direction: row; justify-content: flex-end; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+                <ui:VisualElement name="stompIconContainer" style="flex-grow: 0; width: 100%; height: 100%;">
+                    <ui:VisualElement name="StompPowerUpIcon" style="flex-grow: initial; background-color: rgba(14, 60, 229, 0); width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Textures/bull-stomp-icon.png?fileID=2800000&amp;guid=ab5859a9561b98a4782e448fd4e53c0d&amp;type=3#bull-stomp-icon&apos;); bottom: auto; right: auto; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; align-self: auto; align-items: stretch; -unity-text-align: upper-left; -unity-background-image-tint-color: rgb(87, 67, 45); padding-left: 0; padding-right: 0;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="stompIconContainer" style="flex-grow: 0; width: 100%; height: 100%;">
+                    <ui:VisualElement name="StompPowerUpIcon" style="flex-grow: initial; background-color: rgba(14, 60, 229, 0); width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Textures/bull-stomp-icon.png?fileID=2800000&amp;guid=ab5859a9561b98a4782e448fd4e53c0d&amp;type=3#bull-stomp-icon&apos;); bottom: auto; right: auto; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; align-self: auto; align-items: stretch; -unity-text-align: upper-left; -unity-background-image-tint-color: rgb(87, 67, 45); padding-left: 0; padding-right: 0;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="stompIconContainer" style="flex-grow: 0; width: 100%; height: 100%;">
+                    <ui:VisualElement name="StompPowerUpIcon" style="flex-grow: initial; background-color: rgba(14, 60, 229, 0); width: 100%; height: 100%; background-image: url(&apos;project://database/Assets/Textures/bull-stomp-icon.png?fileID=2800000&amp;guid=ab5859a9561b98a4782e448fd4e53c0d&amp;type=3#bull-stomp-icon&apos;); bottom: auto; right: auto; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; align-self: auto; align-items: stretch; -unity-text-align: upper-left; -unity-background-image-tint-color: rgb(87, 67, 45); padding-left: 0; padding-right: 0;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

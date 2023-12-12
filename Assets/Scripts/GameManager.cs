@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
     public event Action OnGameOver;
     public event Action<float> OnDifficultyChange;
     public event Action OnChangeGameState;
+
+    public event Action OnTopScoreChange;
     enum DiffcultyLevel { Easy, Medium, Hard };
     private static GameManager _instance;
     [SerializeField] int score;
@@ -17,6 +20,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] bool isPaused;
     [SerializeField] bool isGameOver;
     [SerializeField] int scoreThreshold;
+
+    private List<PlayerData> topScores = new List<PlayerData>();
+
+    public bool isCoverScreen = false;
 
     public bool IsGameOver { get => isGameOver; set => isGameOver = value; }
 
@@ -43,6 +50,7 @@ public class GameManager : MonoBehaviour
     {
         difficulty = DiffcultyLevel.Easy;
         InputManager.Instance.OnPauseButtonPressed += PauseButtonReaction;
+        topScores = SaveSystem.LoadTopScores();
     }
 
     private void PauseButtonReaction(object sender, EventArgs e)
@@ -52,23 +60,26 @@ public class GameManager : MonoBehaviour
 
     public void ChangeGameState()
     {
-        if (isPaused)
+        if (!isCoverScreen)
         {
-            ResumeGame();
-            OnChangeGameState?.Invoke();
-        }
-        else
-        {
-            PauseGame();
-            OnChangeGameState?.Invoke();
-        }
-        try
-        {
-            InputManager.Instance.SwitchActiveActionMap();
-        }
-        catch (NullReferenceException)
-        {
-            print("algo de errado não está certo");
+            if (isPaused)
+            {
+                ResumeGame();
+                OnChangeGameState?.Invoke();
+            }
+            else
+            {
+                PauseGame();
+                OnChangeGameState?.Invoke();
+            }
+            try
+            {
+                InputManager.Instance.SwitchActiveActionMap();
+            }
+            catch (NullReferenceException)
+            {
+                print("algo de errado não está certo");
+            }
         }
     }
 
@@ -154,7 +165,45 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         ChangeGameState();
-        OnGameOver?.Invoke();
         InputManager.Instance.OnPauseButtonPressed -= PauseButtonReaction;
+        OnGameOver?.Invoke();
+        if (IsNewHighScore())
+        {
+            OnTopScoreChange?.Invoke();
+        }
+    }
+    private bool IsNewHighScore()
+    {
+        if (topScores.Count == 0)
+        {
+            return true;
+        }
+        else
+        {
+            foreach (PlayerData playerData in topScores)
+            {
+                if (score > playerData.Score)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void SaveTopScore(string playerName)
+    {
+        topScores.Add(new PlayerData(playerName, score));
+        topScores.Sort((x, y) => y.Score.CompareTo(x.Score));
+        if (topScores.Count > 5)
+        {
+            topScores.RemoveAt(5);
+        }
+        SaveSystem.SaveTopScores(topScores);
+    }
+
+    public List<PlayerData> GetTopScores()
+    {
+        return topScores;
     }
 }

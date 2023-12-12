@@ -8,12 +8,13 @@ using System.Threading;
 public class UIOnPlayManager : MonoBehaviour
 {
     [SerializeField] Player player;
-    [SerializeField] Texture2D velocityPowerUpIcon;
-    [SerializeField] Texture2D stompPowerUpIcon;
-    private Label numLives;
+    [SerializeField] Texture2D bullHead;
+    [SerializeField] Texture2D stompIcon;
     private Label score;
     private VisualElement vPowerUpIcon;
-    private VisualElement sPowerUpIcon;
+
+    private List<VisualElement> lifeIcons;
+    private List<VisualElement> stompIcons;
 
     private void Awake()
     {
@@ -32,42 +33,62 @@ public class UIOnPlayManager : MonoBehaviour
         {
             vPowerUpIcon.style.visibility = Visibility.Hidden;
         }
-        if (e._isStompActive)
+        HiedAllStompIcons();
+        for (int i = 0; i < e._numStomps; i++)
         {
-            sPowerUpIcon.style.visibility = Visibility.Visible;
-        }
-        else
-        {
-            sPowerUpIcon.style.visibility = Visibility.Hidden;
-
+            stompIcons[i].style.visibility = Visibility.Visible;
         }
     }
 
     private void UpdateLives(object sender, EventArgs e)
     {
-        numLives.text = "Num Lives: " + player.NumLives;
+        HideAllLifeIcons();
+        for (int i = 0; i < player.NumLives; i++)
+        {
+            lifeIcons[i].style.visibility = Visibility.Visible;
+        }
     }
 
     private void OnEnable()
     {
+        lifeIcons = new List<VisualElement>();
         GameManager.Instance.OnScoreChange += UpdateScore;
         VisualElement root = GetComponent<UIDocument>().rootVisualElement;
         score = root.Q<Label>("Score");
-        numLives = root.Q<Label>("NumLives");
-        numLives.text = "Num Lives:" + player.NumLives;
+        var numLivesPanel = root.Q<VisualElement>("NumLivesPanel");
+        lifeIcons = numLivesPanel.Query<VisualElement>("BullHead").ToList();
+        HideAllLifeIcons();
+        for (int i = 0; i < player.NumLives; i++)
+        {
+            lifeIcons[i].style.visibility = Visibility.Visible;
+        }
         score.text = "Score: 0";
         vPowerUpIcon = root.Q<VisualElement>("VelocityPowerUpIcon");
-        vPowerUpIcon.style.backgroundImage = new StyleBackground(velocityPowerUpIcon);
         vPowerUpIcon.style.display = DisplayStyle.Flex;
         vPowerUpIcon.style.visibility = Visibility.Hidden;
-        sPowerUpIcon = root.Q<VisualElement>("StompPowerUpIcon");
-        sPowerUpIcon.style.backgroundImage = new StyleBackground(stompPowerUpIcon);
-        sPowerUpIcon.style.display = DisplayStyle.Flex;
-        sPowerUpIcon.style.visibility = Visibility.Hidden;
+        stompIcons = root.Query<VisualElement>("StompPowerUpIcon").ToList();
+        HiedAllStompIcons();
+
     }
 
     internal void UpdateScore(int score)
     {
         this.score.text = "Score: " + score;
+    }
+
+    private void HideAllLifeIcons()
+    {
+        foreach (VisualElement lifeIcon in lifeIcons)
+        {
+            lifeIcon.style.visibility = Visibility.Hidden;
+        }
+    }
+
+    private void HiedAllStompIcons()
+    {
+        foreach (VisualElement stompIcon in stompIcons)
+        {
+            stompIcon.style.visibility = Visibility.Hidden;
+        }
     }
 }

@@ -9,5 +9,7 @@ public enum UIType
     Options,
     GameOver,
     GameStart,
-    HighScores
+    HighScores,
+    AddHighScore,
+    Cover
 }

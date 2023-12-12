@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/UGUI/listEntry.uss?fileID=7433441132597879392&amp;guid=6ba520f1250203b4d948fbbe4b670fa3&amp;type=3#listEntry" />
     <ui:VisualElement name="parent" style="flex-grow: 1; flex-direction: row; width: 330px; height: 40px; position: absolute; align-items: center; justify-content: center; top: auto; left: auto; align-self: center;">
-        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="name" class="nameLabel" style="width: 30%; margin-top: 4px; margin-right: 0; margin-bottom: 4px; margin-left: 2px; border-top-left-radius: 10px; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 10px;" />
-        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="score" class="scoreLabel" style="flex-shrink: 1; flex-grow: 1; width: 70%; margin-top: 4px; margin-right: 2px; margin-bottom: 4px; margin-left: 0; border-top-left-radius: 0; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 0;" />
+        <ui:Label tabindex="0" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="name" class="nameLabel name-label" />
+        <ui:Label tabindex="0" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="score" class="score-label" />
     </ui:VisualElement>
 </ui:UXML>
