@@ -24,7 +24,7 @@ public class AddNewHighScore : MonoBehaviour
         string text = playerName.text;
         if (text.Length > 9)
         {
-            text = text.Substring(0, 9);
+            text = text.Substring(0, 19);
         }
         if (text != null && text.Length > 0)
         {

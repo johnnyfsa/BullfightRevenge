@@ -18,7 +18,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] int MaxNumEnemies = 20;
     [SerializeField] int MaxNumPowerUps = 5;
 
-    private int previousPowerUp;
+    private int previousEnemyType;
+    private int timesEnemyRepeated = 0;
+    private List<int> previousPowerups = new List<int>();
 
     public float EnemySpawnTimer { get => enemySpawnTimer; set => enemySpawnTimer = value; }
 
@@ -29,7 +31,7 @@ public class SpawnManager : MonoBehaviour
         _enemyPool = new ObjectPool<Enemy>(SpawnEnemy, OnTakeEnemyFromPool, OnReturnEnemyToPool, defaultCapacity: 20);
         _powerUpPool = new ObjectPool<PowerUp>(SpawnPowerUp, OnTakePowerUpFromPool, OnReturnPowerUpToPool, defaultCapacity: 5);
         _explosionPool = new ObjectPool<FXController>(SpawnExplosion, OnTakeExplosionFromPool, OnReturnExplosionToPool, defaultCapacity: 20);
-        previousPowerUp = -1;
+        previousEnemyType = -1;
     }
 
     private void StopSpawning()
@@ -84,17 +86,32 @@ public class SpawnManager : MonoBehaviour
 
     private PowerUp SpawnPowerUp()
     {
-        int powerUpToSpawn = UnityEngine.Random.Range(0, powerUps.Count);
-        while (powerUpToSpawn == previousPowerUp)
-        {
-            powerUpToSpawn = UnityEngine.Random.Range(0, powerUps.Count);
-        }
-        previousPowerUp = powerUpToSpawn;
+        int powerUpToSpawn = GetUniquePowerUp();
+        StorePreviousPowerUp(powerUpToSpawn);
         Vector3 powerUpPosition = new Vector3(UnityEngine.Random.Range(-9f, 10f), 0.3f, UnityEngine.Random.Range(-9f, 10f));
         PowerUp powerUp = Instantiate(powerUps[powerUpToSpawn]);
         powerUp.transform.position = powerUpPosition;
         powerUp.Init(_powerUpPool);
         return powerUp;
+    }
+
+    private int GetUniquePowerUp()
+    {
+        int powerUpToSpawn = UnityEngine.Random.Range(0, powerUps.Count);
+        while (previousPowerups.Contains(powerUpToSpawn))
+        {
+            powerUpToSpawn = UnityEngine.Random.Range(0, powerUps.Count);
+        }
+        return powerUpToSpawn;
+    }
+
+    private void StorePreviousPowerUp(int powerUp)
+    {
+        previousPowerups.Add(powerUp);
+        if (previousPowerups.Count > powerUps.Count - 1)
+        {
+            previousPowerups.RemoveAt(0);
+        }
     }
 
     private void Start()
@@ -108,6 +125,25 @@ public class SpawnManager : MonoBehaviour
         enemy.gameObject.SetActive(false);
     }
 
+    private int AvoidEnemyRepetition(int enemyType, int timesAllowedToRepeat)
+    {
+        //evade the enemy to repeat itself too many times
+        if (enemyType == previousEnemyType)
+        {
+            timesEnemyRepeated++;
+        }
+        if (timesEnemyRepeated >= timesAllowedToRepeat)
+        {
+            while (enemyType == previousEnemyType)
+            {
+                enemyType = UnityEngine.Random.Range(0, enemies.Count);
+            }
+            timesEnemyRepeated = 0;
+        }
+        previousEnemyType = enemyType;
+        return enemyType;
+    }
+
     private Enemy SpawnEnemy()
     {
         Enemy enemy;
@@ -115,6 +151,7 @@ public class SpawnManager : MonoBehaviour
         Vector3 enemyPos;
         //decide which enemy to spawn
         int enemyType = UnityEngine.Random.Range(0, enemies.Count);
+        enemyType = AvoidEnemyRepetition(enemyType, 3);
         //instantiate enemy
         switch (enemyType)
         {

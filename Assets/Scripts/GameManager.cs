@@ -145,8 +145,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // O jogo está sendo executado como aplicativo build
-            Debug.Log("Executando como Aplicativo");
+            print("Quit Game");
+            ReturnToTitle();
         }
     }
     public void RestartGame()
