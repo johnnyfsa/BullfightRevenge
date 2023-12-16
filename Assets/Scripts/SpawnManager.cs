@@ -65,6 +65,7 @@ public class SpawnManager : MonoBehaviour
 
     private void OnTakeEnemyFromPool(Enemy enemy)
     {
+        SetupEnemyLocation(enemy);
         enemy.gameObject.SetActive(true);
     }
 
@@ -147,8 +148,6 @@ public class SpawnManager : MonoBehaviour
     private Enemy SpawnEnemy()
     {
         Enemy enemy;
-        float enemyRotation;
-        Vector3 enemyPos;
         //decide which enemy to spawn
         int enemyType = UnityEngine.Random.Range(0, enemies.Count);
         enemyType = AvoidEnemyRepetition(enemyType, 3);
@@ -163,43 +162,8 @@ public class SpawnManager : MonoBehaviour
                 break;
         }
         //decide where to spawn enemy
-        int location = UnityEngine.Random.Range(0, 4); //0 = left, 1 = top, 2 = right, 3 = bottom
-        switch (location)
-        {
-            //left
-            case 0:
-                enemyPos = new Vector3(-10.0f, enemy.transform.position.y, UnityEngine.Random.Range(-10, 10));
-                enemyRotation = 90.0f;
-                enemy.transform.position = enemyPos;
-                enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
-                enemy.Init(_enemyPool, _explosionPool);
-                break;
-            //top
-            case 1:
-                enemyPos = new Vector3(UnityEngine.Random.Range(-10, 10), enemy.transform.position.y, 10.0f);
-                enemyRotation = 180.0f;
-                enemy.transform.position = enemyPos;
-                enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
-                enemy.Init(_enemyPool, _explosionPool);
-                break;
-            //right
-            case 2:
-                enemyPos = new Vector3(10, enemy.transform.position.y, UnityEngine.Random.Range(-10, 10));
-                enemyRotation = -90.0f;
-                enemy.transform.position = enemyPos;
-                enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
-                enemy.Init(_enemyPool, _explosionPool);
-                break;
-            //bottom
-            case 3:
-                enemyPos = new Vector3(UnityEngine.Random.Range(-10, 10), enemy.transform.position.y, -10.0f);
-                enemyRotation = 0;
-                enemy.transform.position = enemyPos;
-                enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
-                enemy.Init(_enemyPool, _explosionPool);
-                break;
-
-        }
+        SetupEnemyLocation(enemy);
+        enemy.Init(_enemyPool, _explosionPool);
         //return enemy spawned
         return enemy;
     }
@@ -227,5 +191,44 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(powerUpSpawnTimer);
         }
 
+    }
+
+    private void SetupEnemyLocation(Enemy enemy)
+    {
+        float enemyRotation;
+        Vector3 enemyPos;
+        int location = UnityEngine.Random.Range(0, 4); //0 = left, 1 = top, 2 = right, 3 = bottom
+        switch (location)
+        {
+            //left
+            case 0:
+                enemyPos = new Vector3(-10.0f, enemy.transform.position.y, UnityEngine.Random.Range(-10, 10));
+                enemyRotation = 90.0f;
+                enemy.transform.position = enemyPos;
+                enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
+                break;
+            //top
+            case 1:
+                enemyPos = new Vector3(UnityEngine.Random.Range(-10, 10), enemy.transform.position.y, 10.0f);
+                enemyRotation = 180.0f;
+                enemy.transform.position = enemyPos;
+                enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
+                break;
+            //right
+            case 2:
+                enemyPos = new Vector3(10, enemy.transform.position.y, UnityEngine.Random.Range(-10, 10));
+                enemyRotation = -90.0f;
+                enemy.transform.position = enemyPos;
+                enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
+                break;
+            //bottom
+            case 3:
+                enemyPos = new Vector3(UnityEngine.Random.Range(-10, 10), enemy.transform.position.y, -10.0f);
+                enemyRotation = 0;
+                enemy.transform.position = enemyPos;
+                enemy.transform.rotation = Quaternion.Euler(0, enemyRotation, 0);
+                break;
+
+        }
     }
 }

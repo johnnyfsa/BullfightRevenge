@@ -5,6 +5,8 @@ using UnityEngine;
 public enum SoundType
 {
     MainTheme,
+    Running,
+    Title,
     Stomp,
     BullHit,
     EnemyHit,

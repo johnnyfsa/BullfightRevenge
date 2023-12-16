@@ -104,6 +104,7 @@ public class Player : MonoBehaviour
                 if (speedMultiplyer <= 1.5f)
                 {
                     riseSmoke.Play();
+                    AudioManager.Instance.PlayMusic(SoundType.Running);
                     OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, numStomps));
                 }
                 StartCoroutine(FadeSpeed());
@@ -195,6 +196,7 @@ public class Player : MonoBehaviour
         if (speedMultiplyer == 1.0f)
         {
             riseSmoke.Stop();
+            AudioManager.Instance.PlayMusic(SoundType.MainTheme);
             OnPowerUpChanged?.Invoke(this, new PowerUpArgs(speedMultiplyer, numStomps));
         }
     }

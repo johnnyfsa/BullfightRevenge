@@ -6,9 +6,9 @@
         <ui:VisualElement name="middle" style="flex-grow: 1; width: 100%; height: 100%; align-items: center; justify-content: center;">
             <ui:VisualElement name="OptionBox" class="container-simple" style="flex-grow: 0; background-color: rgb(197, 197, 197); position: relative; width: 360px; height: 360px; top: auto; justify-content: space-around;">
                 <ui:Label tabindex="-1" text="Options" parse-escape-sequences="true" display-tooltip-when-elided="true" style="font-size: 36px; -unity-text-align: upper-center; -unity-font-definition: initial; -unity-font: url(&apos;project://database/Assets/Fonts/Saddlebag.ttf?fileID=12800000&amp;guid=6868c9004c06f314687eb74a3f990df5&amp;type=3#Saddlebag&apos;); color: rgb(87, 67, 45);" />
-                <ui:Slider picking-mode="Ignore" label="SFX Volume" value="42" high-value="100" name="sfxSlider" class="slider" />
-                <ui:Slider picking-mode="Ignore" label="Music Volume" value="42" high-value="100" name="musicSlider" class="slider" />
-                <ui:Button text="Return" parse-escape-sequences="true" display-tooltip-when-elided="true" name="exitBtn" class="button-simple" />
+                <ui:Slider picking-mode="Ignore" label="SFX Volume" value="42" high-value="100" name="sfxSlider" class="slider selectable" />
+                <ui:Slider picking-mode="Ignore" label="Music Volume" value="42" high-value="100" name="musicSlider" class="slider selectable" />
+                <ui:Button text="Return" parse-escape-sequences="true" display-tooltip-when-elided="true" name="exitBtn" class="button-simple selectable" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="right" style="flex-grow: 1; width: 100%; height: 100%;" />

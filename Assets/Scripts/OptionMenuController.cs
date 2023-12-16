@@ -6,44 +6,16 @@ using UnityEngine.UIElements;
 
 public class OptionMenuController : MonoBehaviour
 {
-    private class SelectableElement
-    {
-        public Slider slider;
-        public Button button;
-
-        public SelectableElement(Slider slider)
-        {
-            this.slider = slider;
-        }
-        public SelectableElement(Button button)
-        {
-            this.button = button;
-        }
-
-        public void Focus()
-        {
-            if (button == null)
-            {
-                slider.Focus();
-            }
-            else
-            {
-                button.Focus();
-            }
-        }
-    }
     public event Action OnCloseOptions;
     VisualElement root;
     private int index;
-
-    private List<SelectableElement> selectableElements;
+    private List<VisualElement> selectableItems;
     Slider musicSlider, sfxSlider;
     Button exitBtn;
 
     void OnEnable()
     {
         index = 0;
-        selectableElements = new List<SelectableElement>();
         root = GetComponent<UIDocument>().rootVisualElement;
         VisualElement optionBox = root.Q<VisualElement>("OptionBox");
         musicSlider = optionBox.Q<Slider>("musicSlider");
@@ -51,18 +23,12 @@ public class OptionMenuController : MonoBehaviour
         exitBtn = optionBox.Q<Button>("exitBtn");
         List<Slider> sliders = new List<Slider>();
         sliders = optionBox.Query<Slider>().ToList();
-        foreach (Slider slider in sliders)
-        {
-            selectableElements.Add(new SelectableElement(slider));
-        }
-        foreach (Button button in optionBox.Query<Button>().ToList())
-        {
-            selectableElements.Add(new SelectableElement(button));
-        }
+        selectableItems = new List<VisualElement>();
+        selectableItems = root.Query(className: "selectable").ToList();
 
         sfxSlider.value = AudioManager.Instance.GetSFXVolume() * 100;
         musicSlider.value = AudioManager.Instance.GetMusicVolume() * 100;
-        selectableElements[index].Focus();
+        selectableItems[index].Focus();
 
         root.RegisterCallback<KeyDownEvent>(OnNavigateUI, TrickleDown.TrickleDown);
         root.RegisterCallback<KeyDownEvent>(ConfirmAction, TrickleDown.TrickleDown);
@@ -116,12 +82,12 @@ public class OptionMenuController : MonoBehaviour
                 index--;
                 if (index < 0)
                 {
-                    index = selectableElements.Count - 1;
+                    index = selectableItems.Count - 1;
                 }
                 break;
             case KeyCode.DownArrow:
                 index++;
-                if (index > selectableElements.Count - 1)
+                if (index > selectableItems.Count - 1)
                 {
                     index = 0;
                 }
@@ -130,12 +96,12 @@ public class OptionMenuController : MonoBehaviour
                 index--;
                 if (index < 0)
                 {
-                    index = selectableElements.Count - 1;
+                    index = selectableItems.Count - 1;
                 }
                 break;
             case KeyCode.S:
                 index++;
-                if (index > selectableElements.Count - 1)
+                if (index > selectableItems.Count - 1)
                 {
                     index = 0;
                 }
@@ -169,37 +135,26 @@ public class OptionMenuController : MonoBehaviour
                 }
                 break;
         }
-        selectableElements[index].Focus();
+        selectableItems[index].Focus();
     }
 
-
-    Button FindFocusedButton()
+    private VisualElement FindFocusedItem()
     {
-        foreach (SelectableElement element in selectableElements)
-        {
-            if (element.button != null)
-            {
-                if (element.button.panel.focusController.focusedElement == element.button)
-                {
-                    return element.button;
-                }
-            }
-        }
+        VisualElement element = selectableItems.Find(x => x == x.panel.focusController.focusedElement);
+        return element;
+    }
+
+    private Slider FindFocusedSlider()
+    {
+        VisualElement element = FindFocusedItem();
+        if (element is Slider) return element as Slider;
         return null;
     }
 
-    Slider FindFocusedSlider()
+    private Button FindFocusedButton()
     {
-        foreach (SelectableElement element in selectableElements)
-        {
-            if (element.slider != null)
-            {
-                if (element.slider.panel.focusController.focusedElement == element.slider)
-                {
-                    return element.slider;
-                }
-            }
-        }
+        VisualElement element = FindFocusedItem();
+        if (element is Button) return element as Button;
         return null;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,14 @@ public class EnemyShoot : MonoBehaviour
     void Awake()
     {
         _projectilePool = new ObjectPool<Projectile>(CreateProjectile, null, OnReturnToPool, defaultCapacity: 50);
+        GameManager.Instance.OnInsaneLevelReched += ChangeShotCoolDown;
     }
+
+    private void ChangeShotCoolDown(float obj)
+    {
+        shotCooldown = obj;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +33,14 @@ public class EnemyShoot : MonoBehaviour
     void OnEnable()
     {
         StartCoroutine(Shoot(shotCooldown));
+    }
+
+    void OnDestroy()
+    {
+        GameManager.Instance.OnInsaneLevelReched -= ChangeShotCoolDown;
+        StopAllCoroutines();
+        _projectilePool.Clear();
+        _projectilePool.Dispose();
     }
 
     // Update is called once per frame

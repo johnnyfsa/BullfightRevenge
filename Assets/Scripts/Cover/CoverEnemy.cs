@@ -22,6 +22,7 @@ public class CoverEnemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag(NAMETAG))
         {
+            AudioManager.Instance.PlaySFX(SoundType.EnemyHit);
             Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }

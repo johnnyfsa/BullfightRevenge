@@ -37,3 +37,6 @@
     font-size: 20px;
     background-image: url('project://database/Assets/Textures/Sprites/kenney_ui-pack-rpg-expansion/PNG/buttonLong_brown_pressed.png?fileID=2800000&guid=015da55d969b78644aa027029e93e407&type=3#buttonLong_brown_pressed');
 }
+
+.selectable {
+}

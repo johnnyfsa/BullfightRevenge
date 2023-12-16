@@ -11,9 +11,11 @@ public class GameManager : MonoBehaviour
     public event Action OnGameOver;
     public event Action<float> OnDifficultyChange;
     public event Action OnChangeGameState;
+    public event Action<float> OnInsaneLevelReched;
+
 
     public event Action OnTopScoreChange;
-    enum DiffcultyLevel { Easy, Medium, Hard };
+    public enum DiffcultyLevel { Easy, Medium, Hard, Harder, Insane };
     private static GameManager _instance;
     [SerializeField] int score;
     [SerializeField] DiffcultyLevel difficulty;
@@ -31,8 +33,13 @@ public class GameManager : MonoBehaviour
 
     public int Score { get => score; set => score = value; }
 
+    public DiffcultyLevel Difficulty { get => difficulty; set => difficulty = value; }
+
+    public int ScoreThreshold { get => scoreThreshold; set => scoreThreshold = value; }
+
     private void Awake()
     {
+        ScoreThreshold = 100;
         // Ensure that only one instance of the singleton exists.
         if (Instance == null)
         {
@@ -48,6 +55,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        if (SceneManager.GetActiveScene().name == "Cover")
+        {
+            isCoverScreen = true;
+        }
         difficulty = DiffcultyLevel.Easy;
         InputManager.Instance.OnPauseButtonPressed += PauseButtonReaction;
         topScores = SaveSystem.LoadTopScores();
@@ -78,7 +89,7 @@ public class GameManager : MonoBehaviour
             }
             catch (NullReferenceException)
             {
-                print("algo de errado não está certo");
+                print("Active Action Map is Null");
             }
         }
     }
@@ -108,7 +119,7 @@ public class GameManager : MonoBehaviour
         if (score >= scoreThreshold)
         {
             scoreThreshold *= 2;
-            if (difficulty == DiffcultyLevel.Hard)
+            if (difficulty == DiffcultyLevel.Insane)
             {
                 return;
             }
@@ -131,6 +142,13 @@ public class GameManager : MonoBehaviour
             case DiffcultyLevel.Hard:
                 spawnTimer = 2.0f;
                 break;
+            case DiffcultyLevel.Harder:
+                spawnTimer = 1.0f;
+                break;
+            case DiffcultyLevel.Insane:
+                spawnTimer = 0.5f;
+                OnInsaneLevelReched?.Invoke(0.5f);
+                break;
         }
         OnDifficultyChange?.Invoke(spawnTimer);
 
@@ -139,15 +157,10 @@ public class GameManager : MonoBehaviour
     public void QuitGame()
     {
         //quit the editor
-        if (Application.isEditor)
-        {
-            UnityEditor.EditorApplication.isPlaying = false;
-        }
-        else
-        {
-            print("Quit Game");
-            ReturnToTitle();
-        }
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        ReturnToTitle();
     }
     public void RestartGame()
     {
@@ -194,6 +207,8 @@ public class GameManager : MonoBehaviour
     public void ReturnToTitle()
     {
         ChangeGameState();
+        isCoverScreen = true;
+        score = 0;
         SceneManager.LoadScene("Cover");
     }
 

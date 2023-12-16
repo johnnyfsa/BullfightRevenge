@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -27,7 +28,29 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        PlayMusic(SoundType.MainTheme);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        GetMusicAccordingToScene(SceneManager.GetActiveScene());
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GetMusicAccordingToScene(scene);
+    }
+
+    public void GetMusicAccordingToScene(Scene scene)
+    {
+        if (scene != null)
+        {
+            switch (scene.name)
+            {
+                case "Cover":
+                    PlayMusic(SoundType.Title);
+                    break;
+                case "Main":
+                    PlayMusic(SoundType.MainTheme);
+                    break;
+            }
+        }
     }
 
     public void PlayMusic(SoundType type)
@@ -35,7 +58,7 @@ public class AudioManager : MonoBehaviour
         Sound s = Array.Find(musicSounds, x => x.type == type);
         if (s == null)
         {
-            print("Sound Not Found");
+            print("Music Not Found");
         }
         else
         {
@@ -79,7 +102,6 @@ public class AudioManager : MonoBehaviour
         else
         {
             sfxSource.PlayOneShot(s.clip);
-            Debug.Log("Playing SFX: " + s.type);
         }
     }
 }
